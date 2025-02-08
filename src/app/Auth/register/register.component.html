@@ -1,0 +1,298 @@
+<section class="auth_body">
+  <div class="auth_component">
+    <div class="login_component">
+      <div class="row">
+        <!-- Image Section -->
+        <div class="d-none d-md-block col col-md-6 login_img">
+          <app-lottie-animation-login />
+        </div>
+
+        <div class="col col-12 col-md-6 login_form">
+          <h2>Register</h2>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            @if (step === 2 ) {
+            <div>
+              <div class="inputContainer">
+                <mat-form-field>
+                  <mat-label>Email Address</mat-label>
+                  <input matInput formControlName="email" (input)="checkEmailValid($event)"  />
+                </mat-form-field>
+                @if (registerForm.get("email")?.errors &&
+                registerForm.get("email")?.touched) { @if
+                (registerForm.get('email')?.getError('required')) {
+                <mat-error> Email Address required. </mat-error>
+                } @if (registerForm.get('email')?.getError('email')) {
+                <mat-error> Email Address incorrect. </mat-error>
+                } @if (registerForm.get('email')?.getError('pattern')) {
+                <mat-error> Email Address incorrect. </mat-error>
+                } }
+                @if (emailExists !== null && !registerForm.get('email')?.errors) {
+                  @if (emailExists) {
+                    <mat-error> Email already exists. </mat-error>
+                  }
+                }
+
+              </div>
+              <div class="inputContainer">
+                <mat-form-field>
+                  <mat-label>Password</mat-label>
+                  <input
+                    matInput
+                    [type]="hide() ? 'password' : 'text'"
+                    formControlName="password"
+                  />
+                  <button
+                    mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="clickEvent($event)"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide()"
+                  >
+                    <mat-icon>{{
+                      hide() ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                </mat-form-field>
+                @if (registerForm.get('password')?.errors &&
+                registerForm.get('password')?.touched) { @if
+                (registerForm.get('password')?.getError('required')) {
+                <mat-error> Password is Required </mat-error>
+                } @if (registerForm.get('password')?.getError('minLength')) {
+                <mat-error> Password must be at least 8 characters. </mat-error>
+                } @if (registerForm.get('password')?.getError('pattern')) {
+                <mat-error>
+                  Password must contain at least one uppercase letter, one
+                  lowercase letter and one number.
+                </mat-error>
+                } }
+              </div>
+              <div class="inputContainer">
+                <mat-form-field>
+                  <mat-label>re-password</mat-label>
+                  <input
+                    matInput
+                    [type]="hide() ? 'password' : 'text'"
+                    formControlName="password_confirmation"
+                  />
+                  <button
+                    mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="clickEvent($event)"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide()"
+                  >
+                    <mat-icon>{{
+                      hide() ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                </mat-form-field>
+                @if (registerForm.hasError('mismatch') &&
+                registerForm.get('password_confirmation')?.touched) {
+                <mat-error> not match password </mat-error>
+                }
+              </div>
+              <div class="inputContainer">
+                <mat-form-field>
+                  <mat-label>Choose a date</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="dp"
+                    formControlName="birth"
+                    readonly
+                  />
+                  <mat-hint>DD/MM/YYYY</mat-hint>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="dp"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #dp
+                    startView="year"
+                    [startAt]="startDate"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (registerForm.get("birth")?.errors &&
+                registerForm.get("birth")?.touched) { @if
+                (registerForm.get('birth')?.getError('required')) {
+                <mat-error> Birth date is required. </mat-error>
+                } @if (registerForm.get('birth')?.getError('invalidFormat')) {
+                <mat-error>
+                  Please enter a valid date in DD/MM/YYYY format.
+                </mat-error>
+                } @if (registerForm.get('birth')?.getError('futureDate')) {
+                <mat-error> Please enter a valid date. </mat-error>
+                } }
+              </div>
+            </div>
+            }@if(step === 1 ){
+            <div class="social">
+              <button class="btn facebook" title="facebook">
+                <i class="fab fa-facebook-f"></i> FACEBOOK
+              </button>
+              <button class="btn github" title="github">
+                <i class="fab fa-github"></i> GITHUB
+              </button>
+              <button class="btn google" title="google">
+                <i class="fab fa-google"></i> GOOGLE
+              </button>
+            </div>
+            <div class="loginOption">
+              <span> register with email </span>
+            </div>
+            <div>
+              <div class="inputContainer">
+                <mat-form-field class="example-full-width">
+                  <mat-label>First name</mat-label>
+                  <input matInput formControlName="first_name" />
+                </mat-form-field>
+                @if (registerForm.get("first_name")?.errors &&
+                registerForm.get("first_name")?.touched) { @if
+                (registerForm.get('first_name')?.getError('required')) {
+                <mat-error> this Field is required. </mat-error>
+                }@if(registerForm.get('first_name')?.getError('pattern')) {
+                <mat-error> Name not valid. </mat-error>
+                }@if(registerForm.get('first_name')?.getError('minlength')) {
+                <mat-error> Name must be at least 3 characters. </mat-error>
+                } }
+              </div>
+              <div class="inputContainer">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Last name</mat-label>
+                  <input matInput formControlName="last_name" />
+                </mat-form-field>
+                @if (registerForm.get("last_name")?.errors &&
+                registerForm.get("last_name")?.touched) { @if
+                (registerForm.get('last_name')?.getError('required')) {
+                <mat-error> this Field is required. </mat-error>
+                }@if(registerForm.get('last_name')?.getError('pattern')) {
+                <mat-error> Name not valid. </mat-error>
+                }@if(registerForm.get('last_name')?.getError('minlength')) {
+                <mat-error> Name must be at least 3 characters. </mat-error>
+                } }
+              </div>
+              <div class="inputContainer">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Phone Number </mat-label>
+                  <span matTextPrefix>+02 &nbsp;</span>
+                  <input type="tel" matInput formControlName="phone" />
+                  <mat-icon matSuffix>mode_edit</mat-icon>
+                </mat-form-field>
+                @if (registerForm.get("phone")?.errors &&
+                registerForm.get("phone")?.touched) { @if
+                (registerForm.get('phone')?.getError('required')) {
+                <mat-error> phone number required. </mat-error>
+                } }
+              </div>
+            </div>
+            }@if (step === 3) {
+            <div>
+              <div class="inputContainer">
+                <mat-form-field class="w-100">
+                  <mat-label>City</mat-label>
+                  <input
+                    matInput
+                    placeholder="Ex. San Francisco"
+                    formControlName="city"
+                  />
+                </mat-form-field>
+                @if (registerForm.get('city')?.errors &&
+                registerForm.get('city')?.touched) { @if
+                (registerForm.get('city')?.getError('required')) {
+                <mat-error> city is Required </mat-error>
+                }@if (registerForm.get('city')?.getError('pattern')) {
+                <mat-error> enter valid city </mat-error>
+                }@if (registerForm.get('city')?.getError('minlength')) {
+                <mat-error> enter valid city </mat-error>
+                } }
+              </div>
+              <div class="inputContainer">
+                <mat-form-field class="w-100">
+                  <mat-label>Country</mat-label>
+                  <input
+                    matInput
+                    placeholder="Ex. San Francisco"
+                    formControlName="country"
+                  />
+                </mat-form-field>
+                @if (registerForm.get('country')?.errors &&
+                registerForm.get('country')?.touched) { @if
+                (registerForm.get('country')?.getError('required')) {
+                <mat-error> country is Required </mat-error>
+                }@if (registerForm.get('country')?.getError('pattern')) {
+                <mat-error> enter valid country </mat-error>
+                }@if (registerForm.get('country')?.getError('minlength')) {
+                <mat-error> enter valid country </mat-error>
+                } }
+              </div>
+              <div class="inputContainer">
+                <mat-form-field>
+                  <mat-label>specialization</mat-label>
+                  <mat-select formControlName="specialization" name="food">
+                    @for (food of foods; track food) {
+                    <mat-option [value]="food.value">{{
+                      food.viewValue
+                    }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+                @if (registerForm.get('specialization')?.errors &&
+                registerForm.get('specialization')?.touched) { @if
+                (registerForm.get('specialization')?.getError('required')) {
+                <mat-error> specialization is Required </mat-error>
+                } }
+              </div>
+              <div class="inputContainer">
+                <mat-radio-group
+                  aria-label="Select an option"
+                  formControlName="gender"
+                >
+                  <mat-radio-button value="male">Male</mat-radio-button>
+                  <mat-radio-button value="female">Female</mat-radio-button>
+                </mat-radio-group>
+                @if (registerForm.get('gender')?.errors &&
+                registerForm.get('gender')?.touched) { @if
+                (registerForm.get('gender')?.getError('required')) {
+                <mat-error> gender is Required </mat-error>
+                } }
+              </div>
+            </div>
+            }
+            <div class="registerBtns w-100">
+              <button
+                class="btn btn-danger w-50"
+                (click)="prevStep()"
+                [ngStyle]="{ display: step === 1 ? 'none' : 'block' }"
+                type="button"
+              >
+                <i class="fas fa-arrow-left"></i> BACK
+              </button>
+
+              @if (step !== 3) {
+              <button
+                class="btn btn-warning w-50 float-end"
+                (click)="nextStep()"
+                type="button"
+                [disabled]="!isCurrentStepValid()"
+              >
+                NEXT<i class="fas fa-arrow-right"></i>
+              </button>
+              }@else{
+              <button
+                class="btn btn-dark w-50 float-end"
+                type="submit"
+                [disabled]="!isCurrentStepValid()"
+              >
+                Finish<i class="fas fa-arrow-right"></i>
+              </button>
+              }
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

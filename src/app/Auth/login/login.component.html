@@ -1,0 +1,89 @@
+<section class="auth_body">
+  <div class="auth_component">
+    <div class="login_component">
+      <div class="row">
+        <!-- Image Section -->
+        <div class="d-none d-md-block col col-md-6 login_img">
+          <!-- <img src="./media/images/Auth/Welcome.png" alt="Welcome Image" /> -->
+          <app-lottie-animation-login />
+        </div>
+
+        <div class="col col-12 col-md-6 login_form">
+          <h2>Login</h2>
+          <div class="social">
+            <button class="btn facebook" title="facebook">
+              <i class="fab fa-facebook-f"></i> FACEBOOK
+            </button>
+            <button class="btn github" title="github">
+              <i class="fab fa-github"></i> GITHUB
+            </button>
+            <button class="btn google" title="google">
+              <i class="fab fa-google"></i> GOOGLE
+            </button>
+          </div>
+          <div class="loginOption">
+            <span> Or login with email </span>
+          </div>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div>
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Email or Phone"
+                  formControlName="identifier"
+                  autocomplete="email"
+                />
+              </mat-form-field>
+              @if (loginForm.get("identifier")?.errors &&
+              loginForm.get("identifier")?.touched) { @if
+              (loginForm.get('identifier')?.getError('required')) {
+              <mat-error> Email or Phone is required. </mat-error>
+              } }
+            </div>
+            <div>
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="password"
+                  [type]="hide() ? 'password' : 'text'"
+                  autocomplete="current-password"
+                  formControlName="password"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="clickEvent($event)"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide()"
+                >
+                  <mat-icon>{{
+                    hide() ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+              @if (loginForm.get('password')?.errors &&
+              loginForm.get('password')?.touched) { @if
+              (loginForm.get('password')?.getError('required')) {
+              <mat-error> Password is Required </mat-error>
+              } @if (loginForm.get('password')?.getError('minLength')) {
+              <mat-error> Password must be at least 8 characters. </mat-error>
+              } @if (loginForm.get('password')?.getError('pattern')) {
+              <mat-error>
+                Password must contain at least one uppercase letter, one
+                lowercase letter and one number.
+              </mat-error>
+              } }
+            </div>
+            <button type="submit" class="btn btn-primary mx-2">
+              Next <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="registerDiv" >
+              <span class="my-1" > <a href="/"> forget password  </a> </span>
+              <p>dont have account yet <a routerLink="/register"   class="mx-1" > register </a> now</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

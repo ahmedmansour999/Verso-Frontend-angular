@@ -1,0 +1,55 @@
+<section class="auth_body">
+  <div class="auth_component">
+    <div class="verify_component">
+      <div class="row">
+        <!-- Image Section -->
+        <div class="d-none d-md-block col col-md-6 verify_img">
+          <app-lottie-animation-login />
+        </div>
+
+        <div class="col col-12 col-md-6 verify_form">
+          <h2>One Last Step: Verify Your Email</h2>
+          <span>Check your inbox for the one-time password (OTP) </span>
+          <form [formGroup]="verifyOtp" (ngSubmit)="onSubmit()">
+            <div class="otp-container">
+              <!-- OTP Input Fields -->
+              @for (field of otpFields; track field; let i = $index) {
+              <mat-form-field class="otp-field">
+                <input
+                  #otpInput
+                  matInput
+                  class="otp"
+                  maxlength="1"
+                  type="text"
+                  [formControlName]="'otp' + i"
+                  (input)="onInputChange($event, i)"
+                  (keydown)="onKeyDown($event, i)"
+                  (paste)="onPaste($event)"
+                />
+              </mat-form-field>
+              }
+            </div>
+
+            @if (errorMessage) {
+            <div class="error-message">
+              {{ errorMessage }}
+            </div>
+            }
+
+            <!-- Submit Button -->
+            <div>
+              <button
+                class="btn btn-warning float-end"
+                type="submit"
+                [disabled]="verifyOtp.invalid"
+
+              >
+                Verify
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,176 @@
+.login_component {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 900px;
+  background: #0000006e;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  pointer-events: none;
+  color: white;
+}
+
+.login_img img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+
+.login_form {
+  padding: 2rem;
+}
+
+.login_form h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+form {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login_form label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.login_form input {
+  width: 100%;
+  border-radius: 0.25rem;
+  background-color: transparent !important;
+  color: white !important ;
+
+}
+input::placeholder{
+
+  color:white !important ;
+}
+
+.login_form .btn {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.example-container mat-form-field+mat-form-field {
+  margin-left: 8px;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
+
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.mat-mdc-form-field-error {
+  font-size: small;
+
+}
+
+.social {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.social .btn i {
+  color: white;
+  font-size: 18px;
+  margin: 0 5px 0 0;
+}
+
+.social .btn {
+  color: white;
+  padding: 3px;
+
+}
+
+.social .facebook {
+  background-color: #5856D6;
+}
+
+.social .github {
+  background-color: black;
+}
+
+.social .google {
+  background-color: #D84226;
+}
+
+.loginOption {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.loginOption span {
+  font-weight: 100;
+  opacity: 0.7;
+  position: relative;
+  pointer-events: none;
+  color: white;
+}
+
+.loginOption span::after {
+  content: "";
+  position: absolute;
+  bottom: 47%;
+  left: 109%;
+  width: 100px;
+  height: 1px;
+  background-color: white;
+  opacity: .5;
+}
+
+.loginOption span::before {
+  content: "";
+  position: absolute;
+  bottom: 47%;
+  right: 109%;
+  width: 100px;
+  height: 1px;
+  background-color: white;
+  opacity: .5;
+}
+
+
+.registerDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  opacity: .8;
+  font-size: 12px;
+}

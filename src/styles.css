@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+
+body{
+  margin: 0;
+}
+
+.auth_body {
+  min-height: 100vh;
+  /* Optional: Background color fallback */
+  background-color: rgba(31, 12, 117, 1);
+  background-image: url('../public/media/images/Auth/Login2.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-attachment: fixed;
+  background-position: start start;
+  top: 0;
+  width: 100%;
+  position: relative;
+}
+.auth_body::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  pointer-events: none;
+}
+.auth_component {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
