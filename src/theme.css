@@ -1,0 +1,35 @@
+:root {
+  --text-color: black;
+  --text-colorSidebar: rgb(243, 241, 241);
+  --sidebar-bg: #2D336B;
+  --body-bg: #370d3d;
+  --mode-bg: rgb(243, 111, 37);
+  --title-font: "Orbitron";
+  --section-bg: white;
+  --sectionItem-color: white;
+  --sectionItem-bg: black;
+  --icon-colorforSectionbg : black ;
+  --commentContainer-bg : orange ;
+  --comment-bg : aliceblue ;
+  --coment-text : black ;
+
+}
+
+.dark-theme {
+  --text-color: rgb(250, 247, 247);
+  --text-colorSidebar: rgb(250, 247, 247);
+  --sidebar-bg: #161717;
+  --body-bg: black;
+  --mode-bg: black;
+  --section-bg: black;
+  --sectionItem-color: black;
+  --sectionItem-bg: white;
+  --icon-colorforSectionbg : greenyellow ;
+  --commentContainer-bg : orange ;
+  --comment-bg : black ;
+  --coment-text : white ;
+}
+.text-jop{
+  color: var(--coment-text);
+  opacity: .6;
+}

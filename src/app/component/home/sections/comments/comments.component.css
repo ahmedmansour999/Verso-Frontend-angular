@@ -1,0 +1,44 @@
+.Commnetcontainer {
+  margin: 0 50px;
+  text-align: center;
+  padding: 20px;
+  color: black;
+  background-color: var(--commentContainer-bg);
+  border-radius: 17px;
+  -webkit-border-radius: 17px;
+  -moz-border-radius: 17px;
+  -ms-border-radius: 17px;
+  -o-border-radius: 17px;
+}
+h1{
+  margin-top : 50px ;
+  font-weight: bold;
+}
+
+.comment {
+  background: var(--comment-bg);
+  border-radius: 30px;
+  padding: 20px;
+  min-height: 276px;
+  display: flex;
+  align-items: center;
+  color: var(--coment-text);
+}
+
+.info .img {
+  margin: 10px 0;
+}
+.commentText{
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 4.5em;
+  white-space: normal;
+}
+
+.fa-star{
+  color: darkorange;
+}

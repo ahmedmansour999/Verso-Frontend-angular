@@ -11,23 +11,24 @@
         <div class="col col-12 col-md-6 login_form">
           <h2>Login</h2>
           <div class="social">
-            <button class="btn facebook" title="facebook">
+            <button class="btn facebook" title="facebook" i18n>
               <i class="fab fa-facebook-f"></i> FACEBOOK
             </button>
-            <button class="btn github" title="github">
+            <button class="btn github" title="github" i18n>
               <i class="fab fa-github"></i> GITHUB
             </button>
-            <button class="btn google" title="google">
+            <button class="btn google" title="google" i18n>
               <i class="fab fa-google"></i> GOOGLE
             </button>
           </div>
-          <div class="loginOption">
+          <div class="loginOption" i18n>
             <span> Or login with email </span>
           </div>
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div>
-              <mat-form-field>
+              <mat-form-field i18n>
                 <input
+                  i1
                   matInput
                   placeholder="Email or Phone"
                   formControlName="identifier"
@@ -37,12 +38,15 @@
               @if (loginForm.get("identifier")?.errors &&
               loginForm.get("identifier")?.touched) { @if
               (loginForm.get('identifier')?.getError('required')) {
-              <mat-error> Email or Phone is required. </mat-error>
-              } }
+              <mat-error i18n> Email or Phone is required. </mat-error>
+              } } @if (LoginMsg === 'User not found') {
+              <mat-error i18n> un correct email or phone </mat-error>
+              }
             </div>
             <div>
               <mat-form-field>
                 <input
+                  i1
                   matInput
                   placeholder="password"
                   [type]="hide() ? 'password' : 'text'"
@@ -64,22 +68,29 @@
               @if (loginForm.get('password')?.errors &&
               loginForm.get('password')?.touched) { @if
               (loginForm.get('password')?.getError('required')) {
-              <mat-error> Password is Required </mat-error>
+              <mat-error i18n> Password is Required </mat-error>
               } @if (loginForm.get('password')?.getError('minLength')) {
-              <mat-error> Password must be at least 8 characters. </mat-error>
+              <mat-error i18n>
+                Password must be at least 8 characters.
+              </mat-error>
               } @if (loginForm.get('password')?.getError('pattern')) {
-              <mat-error>
+              <mat-error i18n>
                 Password must contain at least one uppercase letter, one
                 lowercase letter and one number.
               </mat-error>
-              } }
+              } } @if (LoginMsg === 'Invalid password') {
+              <mat-error i18n> password not correct </mat-error>
+              }
             </div>
             <button type="submit" class="btn btn-primary mx-2">
               Next <i class="fas fa-arrow-right"></i>
             </button>
-            <div class="registerDiv" >
-              <span class="my-1" > <a href="/"> forget password  </a> </span>
-              <p>dont have account yet <a routerLink="/register"   class="mx-1" > register </a> now</p>
+            <div class="registerDiv">
+              <span class="my-1"> <a href="/"> forget password </a> </span>
+              <p>
+                dont have account yet
+                <a routerLink="/register" class="mx-1"> register </a> now
+              </p>
             </div>
           </form>
         </div>

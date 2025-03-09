@@ -242,3 +242,27 @@ mat-label {
 input[readonly] {
   cursor: unset;
 }
+.emailInput{
+  position: relative;
+}
+.spinner {
+  position: absolute !important;
+  right: 0; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+}
+input:focus-visible, input{
+  background-color: transparent !important;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap {
+  background-color: transparent !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start:focus,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end:focus,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap:focus {
+  background-color: transparent !important;
+}

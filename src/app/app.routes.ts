@@ -1,28 +1,43 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './Auth/login/login.component';
-import { RegisterComponent } from './Auth/register/register.component';
-import { VerifyComponent } from './Auth/verify/verify.component';
+
+
+
+
+
+
+import { authGuard } from './guard/auth.guard';
+import { NoAuthGuard } from './guard/NotAuth.guard';
 import { HomeComponent } from './component/home/home.component';
+
 
 export const routes: Routes = [
 
   {
-    path:'', redirectTo:'login', pathMatch:'prefix'
-  } ,
-
-  {
-    path:'login' , component:LoginComponent , title:"Login"
-  } ,
-
-  {
-    path:'register' , component:RegisterComponent , title:"Register"
+    path:'', redirectTo:'login', pathMatch:'full'
   }
   ,
-
   {
-    path:'verify' , component:VerifyComponent , title:"verify password"
+    path:'login' , loadComponent: () => import('./Auth/login/login.component').then(m => m.LoginComponent) , title:"Login", canActivate: [NoAuthGuard]
+  }
+  ,
+  {
+    path:'register' , loadComponent: () => import('./Auth/register/register.component').then(m => m.RegisterComponent) , title:"Register", canActivate: [NoAuthGuard]
+  }
+  ,
+  {
+    path:'verify' , loadComponent: () => import('./Auth/verify/verify.component').then(m => m.VerifyComponent) , title:"verify password", canActivate: [NoAuthGuard]
+  }
+  ,
+  {
+    path:"homePage" , component:HomeComponent , title:"Verso"
   } ,
   {
-    path:"home" , component:HomeComponent , title:"Verso"
+    path:"maintenance" , loadComponent: () => import('./error/server-error/server-error.component').then(m => m.ServerErrorComponent) , title:"maintenance"
+  } ,
+  {
+    path:"home" , loadComponent: () => import('./lottie/intro/intro.component').then(m => m.IntroComponent) , title:"Home"
+  } ,
+  {
+    path:"**" , loadComponent: () => import('./error/notfound/notfound.component').then(m => m.NotfoundComponent) , title:"not Found"
   }
 ];

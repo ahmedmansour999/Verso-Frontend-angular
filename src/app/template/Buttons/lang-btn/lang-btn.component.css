@@ -1,0 +1,116 @@
+/* Container for the toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+/* Text labels for ON and OFF states */
+.switch > span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  width: 50%;
+  text-align: center;
+}
+
+/* ON state text (Arabic) */
+.switch > span.on {
+  left: 0;
+  padding-left: 2px;
+  color: #F36F25; /* Orange color for ON state */
+}
+
+/* OFF state text (English) */
+.switch > span.off {
+  right: 0;
+  padding-right: 4px;
+  color: #fff; /* White color for OFF state */
+}
+
+/* Hide the actual checkbox input */
+.check-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+
+/* Label acting as the toggle switch background */
+.check-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Toggle switch background (default state - English) */
+input.check-toggle-round-flat + label {
+  padding: 2px;
+  width: 100px;
+  height: 35px;
+  background-color: #F36F25; /* Orange background for English */
+  border-radius: 60px;
+  transition: background-color 0.2s;
+}
+
+/* Inner background of the toggle switch */
+input.check-toggle-round-flat + label:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background-color: #F36F25; /* Match the background color */
+  border-radius: 60px;
+  transition: background-color 0.2s;
+}
+
+/* Sliding knob of the toggle switch */
+input.check-toggle-round-flat + label:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 48px;
+  background-color: #fff; /* White knob */
+  border-radius: 52px;
+  transition: margin 0.2s, background-color 0.2s;
+}
+
+/* Toggle switch background (checked state - Arabic) */
+input.check-toggle-round-flat:checked + label {
+  background-color: #4CAF50; /* Green background for Arabic */
+}
+
+/* Inner background for checked state */
+input.check-toggle-round-flat:checked + label:before {
+  background-color: #4CAF50; /* Match the background color */
+}
+
+/* Move the sliding knob to the right when checked */
+input.check-toggle-round-flat:checked + label:after {
+  margin-left: 44px;
+}
+
+/* Dynamic text colors for checked state */
+input.check-toggle-round-flat:checked ~ .on {
+  color: #fff; /* White text for ON state when checked */
+}
+
+input.check-toggle-round-flat:checked ~ .off {
+  color: #F36F25; /* Orange text for OFF state when checked */
+}

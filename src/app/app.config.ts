@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {
   provideCacheableAnimationLoader,
@@ -10,20 +10,44 @@ import { routes } from './app.routes';
 import {
   provideClientHydration,
   withEventReplay,
+  withI18nSupport,
 } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { loadingInterceptor } from './Interceptors/loading.interceptor';
+import { errorPageInterceptor } from './Interceptors/error-page.interceptor';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
+
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(withEventReplay(), withI18nSupport() ),
     provideAnimationsAsync(),
     provideLottieOptions({ player: () => player }),
     provideCacheableAnimationLoader(),
     provideNativeDateAdapter(),
-    provideHttpClient()
+    provideHttpClient(
+      withInterceptors([loadingInterceptor , errorPageInterceptor])
+    ) ,
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient],
+        },
+        defaultLanguage: 'en',
+      })
+    ),
+
   ],
 };

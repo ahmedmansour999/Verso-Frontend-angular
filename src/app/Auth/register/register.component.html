@@ -13,10 +13,15 @@
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             @if (step === 2 ) {
             <div>
-              <div class="inputContainer">
-                <mat-form-field>
+              <div class="inputContainer emailInput">
+                <mat-form-field >
                   <mat-label>Email Address</mat-label>
-                  <input matInput formControlName="email" (input)="checkEmailValid($event)"  />
+                  <input
+                    matInput
+                    formControlName="email"
+                    (input)="checkEmailValid($event)"
+
+                  />
                 </mat-form-field>
                 @if (registerForm.get("email")?.errors &&
                 registerForm.get("email")?.touched) { @if
@@ -24,15 +29,24 @@
                 <mat-error> Email Address required. </mat-error>
                 } @if (registerForm.get('email')?.getError('email')) {
                 <mat-error> Email Address incorrect. </mat-error>
-                } @if (registerForm.get('email')?.getError('pattern')) {
-                <mat-error> Email Address incorrect. </mat-error>
-                } }
-                @if (emailExists !== null && !registerForm.get('email')?.errors) {
-                  @if (emailExists) {
-                    <mat-error> Email already exists. </mat-error>
-                  }
-                }
+                } } @if (!registerForm.get('email')?.errors &&
+                registerForm.get("email")?.touched) { @if (messageCheck ===
+                'Email is available') {
+                <mat-error class="text-success"
+                  ><i class="fa-solid fa-check"></i
+                  >{{ messageCheck }}</mat-error
+                >
+                }@else if (messageCheck === 'Email already exists') {
+                <mat-error >{{ messageCheck }}</mat-error>
+                }@else if (checking) {
+                <mat-spinner
+                  diameter="20"
+                  class="spinner"
+                  mode="indeterminate"
+                  style="width: 20px"
+                ></mat-spinner>
 
+                } }
               </div>
               <div class="inputContainer">
                 <mat-form-field>
@@ -275,7 +289,7 @@
                 class="btn btn-warning w-50 float-end"
                 (click)="nextStep()"
                 type="button"
-                [disabled]="!isCurrentStepValid()"
+                [disabled]="isButtonDisabled()"
               >
                 NEXT<i class="fas fa-arrow-right"></i>
               </button>
@@ -283,14 +297,13 @@
               <button
                 class="btn btn-dark w-50 float-end"
                 type="submit"
-                [disabled]="!isCurrentStepValid()"
+                [disabled]="isButtonDisabled()"
               >
                 Finish<i class="fas fa-arrow-right"></i>
               </button>
               }
             </div>
           </form>
-
         </div>
       </div>
     </div>

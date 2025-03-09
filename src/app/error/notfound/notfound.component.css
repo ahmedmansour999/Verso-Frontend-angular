@@ -1,0 +1,45 @@
+section{
+
+}
+
+.error-container{
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50% ,-50% );
+  z-index: 22;
+  color: aliceblue;
+}
+.svg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.error-text{
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  justify-content: center;
+}
+.NotFoundCode{
+  font-size: 108px;
+  line-height: 112px;
+  color: #b390ff;
+}
+
+@media only screen and (max-width: 767px) {
+  .error-btn {
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .error-text{
+    text-align: center !important;
+  }
+  .code_description
+  {
+    font-size: 15px;
+  }
+}

@@ -2,9 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError  } from 'rxjs';
 
+
+interface LoginData {
+  identifier : any ;
+  password : any ;
+}
+
+
+
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class AuthService {
 
   Api = 'http://localhost:8000/api' ;
@@ -27,5 +37,13 @@ export class AuthService {
     )
   }
 
+  login(userData : LoginData ):Observable<any>{
+    return this.httpClient.post(`${this.Api}/login` , userData).pipe(
+      catchError(err => {
+        return throwError(err);
+      })
+    )
+
+  }
 
 }

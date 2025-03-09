@@ -27,7 +27,7 @@ import { AuthService } from '../../Api/Auth/auth.service';
 import { Router } from '@angular/router';
 import { ShowError } from '../../helper/show-error';
 import { UnquiryService } from '../../Api/Auth/unquiry.service';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-register',
@@ -43,59 +43,88 @@ import { UnquiryService } from '../../Api/Auth/unquiry.service';
     MatIconModule,
     LottieAnimationLoginComponent,
     CommonModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   encapsulation: ViewEncapsulation.None,
-
 })
 export class RegisterComponent {
-  errorMessage :string = '';
+  errorMessage: string = '';
   event: any;
   step: number = 1;
-  readonly startDate = new Date(1990, 0, 1);
+  readonly startDate = new Date(1999, 0, 1);
   selectedValue: string | undefined;
-  emailExists: boolean | null = null;
+  emailExists!: boolean | null;
+  checking!: boolean | null;
+  messageCheck: string = '';
 
-
-
-
-  constructor( private registerApi:AuthService  , private router : Router , private showError : ShowError , private checkEmailService : UnquiryService){}
-
+  constructor(
+    private registerApi: AuthService,
+    private router: Router,
+    private showError: ShowError,
+    private checkEmailService: UnquiryService
+  ) {}
 
   foods = [
     { value: 'steak-0', viewValue: 'Steak' },
     { value: 'pizza-1', viewValue: 'Pizza' },
     { value: 'tacos-2', viewValue: 'Tacos' },
   ];
+
   nextStep() {
     if (this.step < 3) {
       this.step++;
     }
   }
+
   prevStep() {
     if (this.step > 1) {
       this.step--;
     }
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   registerForm: FormGroup = new FormGroup(
     {
-      first_name: new FormControl(null, [Validators.required, Validators.minLength(3) , Validators.pattern("^[a-zA-Z]*$")]),
-      last_name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]*$")]),
-      email: new FormControl(null, [Validators.required, Validators.email , Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
-      phone: new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
+      first_name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern('^[a-zA-Z]*$'),
+      ]),
+      last_name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern('^[a-zA-Z]*$'),
+      ]),
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+      ]),
+      phone: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
       gender: new FormControl(null, [Validators.required]),
-      birth: new FormControl(null, [Validators.required , dateFormatValidator()]),
-      specialization: new FormControl(null, [Validators.required ]),
-      city: new FormControl(null, [Validators.required, Validators.pattern("^[a-zA-Z ]*$"), Validators.minLength(3) ]),
-      country: new FormControl(null, [Validators.required, Validators.pattern("^[a-zA-Z ]*$"), Validators.minLength(3) ]),
+      birth: new FormControl(null, [
+        Validators.required,
+        dateFormatValidator(),
+      ]),
+      specialization: new FormControl(null, [Validators.required]),
+      city: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z ]*$'),
+        Validators.minLength(3),
+      ]),
+      country: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z ]*$'),
+        Validators.minLength(3),
+      ]),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
@@ -134,6 +163,10 @@ export class RegisterComponent {
     }
   }
 
+  isButtonDisabled(): boolean {
+    return this.checking || this.emailExists || !this.isCurrentStepValid();
+  }
+
   passwordMatchValidator(control: AbstractControl) {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('password_confirmation')?.value;
@@ -141,29 +174,42 @@ export class RegisterComponent {
   }
 
   formatDate(date: Date): string {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`; // YYYY-MM-DD format
   }
 
-  checkEmailValid(event : any) {
-    const email = event.target.value;
+  checkEmailValid(event: any) {
+    const emailValue = event.target.value;
 
-    if (this.registerForm.get('email')?.valid) {
+    if (emailValue) {
+      if (this.registerForm.get('email')?.valid) {
+        this.emailExists = null;
+        this.checking = true;
+        this.messageCheck = ''; // Set checking message
 
-      this.checkEmailService.checkValidEmail(email).subscribe({
-        next: (response: any) => {
-          console.log('Response from backend:', response);
-          this.emailExists = response.message === 'Email already exists';
-        },
-        error: (err) => {
-          console.error('Error checking email:', err);
-          this.emailExists = null; // Reset on error
-        }
-      });
+        this.checkEmailService.checkValidEmail(emailValue).subscribe({
+          next: (response: any) => {
+            this.checking = false;
+            this.emailExists = response === 'Email already exists';
+            this.messageCheck = this.emailExists
+              ? 'Email already exists'
+              : 'Email is available'; // Update message
+          },
+          error: (err) => {
+            this.checking = false;
+            this.emailExists = null;
+            this.messageCheck = '';
+          },
+        });
+      } else {
+        this.emailExists = null;
+        this.checking = false;
+        this.messageCheck = ''; // Reset message if email is invalid
+      }
     } else {
-      this.emailExists = null; // Reset if the email is invalid
+      this.messageCheck = ''; // Reset message if email field is empty
     }
   }
 
@@ -173,22 +219,22 @@ export class RegisterComponent {
         ...this.registerForm.value,
         birth: this.formatDate(this.registerForm.value.birth),
       };
-      this.registerApi.register(formValue).subscribe(
-        {
-          next: () => {
-            sessionStorage.setItem("register_user" , formValue)
-            this.router.navigate(['/verify'])
-          },
-          error: (error) => {
-            if (error.error && typeof error.error === 'object') {
-              const errorMessages =  this.showError.extractErrorMessages(error.error);
-              this.errorMessage = errorMessages.join(' ');
-            } else {
-              this.errorMessage = 'An error occurred. Please try again.';
-            }
-          },
-        }
-      ) ;
+      this.registerApi.register(formValue).subscribe({
+        next: () => {
+          sessionStorage.setItem('register_user', formValue);
+          this.router.navigate(['/verify']);
+        },
+        error: (error) => {
+          if (error.error && typeof error.error === 'object') {
+            const errorMessages = this.showError.extractErrorMessages(
+              error.error
+            );
+            this.errorMessage = errorMessages.join(' ');
+          } else {
+            this.errorMessage = 'An error occurred. Please try again.';
+          }
+        },
+      });
     }
   }
 
@@ -197,6 +243,5 @@ export class RegisterComponent {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
-
 
 }

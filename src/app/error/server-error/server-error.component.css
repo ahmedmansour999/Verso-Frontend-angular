@@ -1,0 +1,14 @@
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999 !important;
+  position: absolute;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.error-text {
+  text-align: center;
+}

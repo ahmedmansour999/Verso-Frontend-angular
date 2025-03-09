@@ -1,0 +1,30 @@
+<section class="Commnetcontainer">
+  <h1>{{ "COMMENT_TITLE" | translate }}</h1>
+  <p>{{ "COMMENT_DESC" | translate }}</p>
+  <div class="comments row">
+    @for( comment of comments ; track comment.id ){
+    <div class="col-12 col-lg-6">
+      <div class="comment row m-3">
+        <div class="info col-md-4 ">
+          <div class="img">
+            <img src="./media/images/sections/female.png" alt="" />
+          </div>
+          <h5>{{ comment.name }}</h5>
+          <p class="text-jop">{{ comment.jop }}</p>
+        </div>
+        <div class="col-md-8  ">
+          <div class="star mb-3 ">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="commentText">
+            {{ comment.comment }}
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>

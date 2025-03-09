@@ -1,3 +1,4 @@
+import { AuthService } from './../../Api/Auth/auth.service';
 import {
   FormControl,
   FormGroup,
@@ -15,7 +16,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { LottieAnimationLoginComponent } from "../../lottie/lottie-animation-login/lottie-animation-login.component";
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { Token } from '../../Class/token.service';
 
 
 @Component({
@@ -36,17 +38,12 @@ import { RouterLink } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent {
-  //loginForm!: FormGroup;
-  errorMessage = signal('');
   event: any;
+  LoginMsg :string = "" ;
 
-  constructor() {}
+  constructor( private _AuthService:AuthService  , private _TokenClass : Token , private _Router : Router ) {}
 
-  ngOnInit(): void {
-    this.loginForm.get('identifier')?.valueChanges.subscribe((value) => {
-      this.updateErrorMessage(value);
-    });
-  }
+  ngOnInit(): void {}
 
   loginForm: FormGroup = new FormGroup({
     identifier: new FormControl(null, Validators.required),
@@ -57,16 +54,22 @@ export class LoginComponent {
     ]),
   });
 
-  updateErrorMessage(identifier: string | number) {
-    if (identifier === '01119710541') {
-      this.errorMessage.set('not found');
-    }
-    console.log(identifier);
-  }
+
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      const identifier = this.loginForm.value.identifier ;
+      const password = this.loginForm.value.password ;
+      this._AuthService.login({identifier , password}).subscribe({
+        next : (res)=>{
+          this.LoginMsg = res.message ;
+          this._TokenClass.setToken(res.token) ;
+          this._Router.navigate(['/home'])
+        },
+        error : (res) => {
+          this.LoginMsg = res.error.message ;
+        }
+      })
     }
   }
 

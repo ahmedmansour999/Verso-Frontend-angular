@@ -1,0 +1,19 @@
+<section class="text-center mt-5">
+  <h1>{{ "meet_our_team" | translate }}</h1>
+  <span>{{
+    "Get to know the faces behind the scenes and learn about the values that drive us."
+      | translate
+  }}</span>
+  <div class="cardContainer row">
+    @for(person of team ; track person.id){
+
+    <div class=" col-12 col-md-4 col-lg-3">
+      <div class="card m-2">
+        <img src="{{ person.image }}" alt="image" />
+        <p class="name">{{ person.name }}</p>
+        <span>{{ person.position }}</span>
+      </div>
+    </div>
+    }
+  </div>
+</section>

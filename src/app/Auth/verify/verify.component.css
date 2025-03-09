@@ -44,7 +44,6 @@ h2 {
 .otp-container {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
 
 .otp-field {
