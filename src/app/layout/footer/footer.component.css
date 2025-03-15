@@ -1,0 +1,20 @@
+.verso_logo {
+  color: darkorange !important;
+  font-style: italic;
+}
+
+footer {
+  background-color: var(--footer-bg);
+  width: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  height: 100px;
+  font-weight: bold;
+}
+
+
+p {
+  color: var(--text-color);
+  text-align: center;
+}

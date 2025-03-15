@@ -1,31 +1,37 @@
-<section class="header_component">
-  <div class="sidebar " [ngClass]="{'open': openMenu}" >
-    <div class="logo ">Verso
+<div [class.showNavBar]="showSide">
+  <section class="header_component">
+    <div class="sidebar" [ngClass]="{ open: openMenu }">
+      <div class="logo">Verso</div>
+      <ul class="list">
+        <li><i class="fa fa-home mx-2"></i> {{ "HOME" | translate }}</li>
+        <li><i class="fa fa-home mx-2"></i> {{ "ABOUT" | translate }}</li>
+        <li><i class="fa fa-home mx-2"></i> {{ "SERVICES" | translate }}</li>
+        <li><i class="fa fa-home mx-2"></i> {{ "PORTFOLIO" | translate }}</li>
+        <li><i class="fa fa-home mx-2"></i> {{ "CONTACT" | translate }}</li>
+      </ul>
+      <div class="profile">
+        <i class="fas fa-user mx-2"></i>
+        <a href=""> {{ "PROFILE" | translate }} </a>
+      </div>
 
-    </div>
-    <ul class="list">
-        <li > <i class="fa fa-home mx-2"></i> {{ 'HOME' | translate }}      </li>
-        <li > <i class="fa fa-home mx-2"></i> {{ 'ABOUT' | translate }}     </li>
-        <li > <i class="fa fa-home mx-2"></i> {{ 'SERVICES' | translate }}  </li>
-        <li ><i class="fa fa-home mx-2"></i>  {{ 'PORTFOLIO' | translate }} </li>
-        <li ><i class="fa fa-home mx-2"></i>  {{ 'CONTACT' | translate }}   </li>
-    </ul>
-    <div class="profile">
-      <i class="fas fa-user mx-2" ></i>
-      <a href=""> {{ 'PROFILE' | translate }}  </a>
-    </div>
-
-    <button class="btnMenu" title="open" (click)="toggleMenu()">
-      @if (openMenu == true) {
+      <button class="btnMenu" title="open" (click)="toggleMenu()">
+        @if (openMenu == true) {
         <i class="fa fa-close"></i>
-      } @else {
+        } @else {
         <i class="fa fa-angle-double-right"></i>
-      }
-    </button>
+        }
+      </button>
+    </div>
+  </section>
+  <!-- <div class="modeContainer">
+    <div class="d-flex align-items-center justify-content-center" >
+      <app-mode-btn />
+      <div>
+        <button (click)="showNavBar()">
+          <i class="fas fa-rotate"></i>
+        </button>
+      </div>
+    </div>
+    <app-lang-btn />
+  </div> -->
 </div>
-</section>
-<div class="modeContainer">
-  <app-mode-btn />
-  <app-lang-btn/>
-</div>
-
