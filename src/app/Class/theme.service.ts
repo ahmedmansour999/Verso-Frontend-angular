@@ -29,4 +29,5 @@ export class ThemeService {
   getTheme(): string {
     return this.theme;
   }
+  
 }

@@ -12,7 +12,7 @@
   --commentContainer-bg : orange ;
   --comment-bg : aliceblue ;
   --coment-text : black ;
-
+  --footer-bg: white ;
 }
 
 .dark-theme {
@@ -28,6 +28,8 @@
   --commentContainer-bg : orange ;
   --comment-bg : black ;
   --coment-text : white ;
+  --footer-bg: #212529 ;
+
 }
 .text-jop{
   color: var(--coment-text);

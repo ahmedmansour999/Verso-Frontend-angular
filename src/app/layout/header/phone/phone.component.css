@@ -1,0 +1,97 @@
+section {
+  position: fixed;
+  bottom: 0;
+  background-color: darkorange;
+  color: black;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 999999;
+}
+
+.main {
+  /*position: absolute;*/
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  z-index: 999;
+  overflow: hidden;
+  transition: transform .2s ease-in-out;
+}
+.min{
+  transform: translateY(50px);
+}
+.main li {
+  width: 25%;
+  height: 100%;
+  text-align: center;
+  list-style: none;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.main li:hover {
+  background-color: blueviolet;
+  color: white;
+}
+
+
+.main li::before {
+  content: attr(data-title);
+  position: absolute;
+  bottom: 100%;
+  background-color: blueviolet;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+
+
+.main li:hover::before {
+  opacity: 1;
+  visibility: visible;
+  z-index: 99;
+}
+
+.more {
+  position: absolute;
+  transform: translateY(-50px);
+  background-color: darkorange;
+  transition: transform .2s ease-in-out;
+  display: flex;
+  justify-content: flex-start;
+
+}
+
+
+.active {
+  background-color: blueviolet;
+  color: white;
+}
+
+
+.modeContainer {
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  direction: rtl;
+  padding: 20px 10px 10px 5px;
+  display: flex;
+}

@@ -25,7 +25,6 @@
   "meet_our_team": "Meet our team",
   "COMMENT_TITLE": "Real Stories from Satisfied Customers",
   "COMMENT_DESC": "See how our landing page ui kit is making an impact.",
-
   "FEEDBACK_TITLE": "Share Your Feedback",
   "FEEDBACK_DESCRIPTION": "We value your opinion! Please leave a comment and rate your experience. Your feedback helps us improve our services and better serve you.",
   "COMMENT_LABEL": "Your Comment:",
@@ -34,6 +33,7 @@
   "RATING_LABEL": "Rating:",
   "RATING_ERROR": "Please select a rating",
   "SUBMIT_BUTTON": "Submit",
-
-  "Get to know the faces behind the scenes and learn about the values that drive us.": "Get to know the faces behind the scenes and learn about the values that drive us."
+  "Get to know the faces behind the scenes and learn about the values that drive us.": "Get to know the faces behind the scenes and learn about the values that drive us.",
+  "COMPANIES": "Companies",
+  "SETTING": "Setting"
 }

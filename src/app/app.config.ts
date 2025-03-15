@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import {
   provideCacheableAnimationLoader,
   provideLottieOptions,
@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
 
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes ,  withPreloading(PreloadAllModules)),
     provideClientHydration(withEventReplay(), withI18nSupport() ),
     provideAnimationsAsync(),
     provideLottieOptions({ player: () => player }),
