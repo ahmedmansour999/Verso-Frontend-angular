@@ -9,7 +9,7 @@ export class ThemeService {
 
   constructor() {
     // Set dark theme as default
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (typeof window !== 'undefined'  && window.localStorage) {
       this.theme = localStorage.getItem('theme') || 'dark';
     }
     this.applyTheme();
@@ -29,5 +29,5 @@ export class ThemeService {
   getTheme(): string {
     return this.theme;
   }
-  
+
 }

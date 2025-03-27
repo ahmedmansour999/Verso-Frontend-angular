@@ -1,0 +1,43 @@
+<section class="row">
+  <div class="education-section col-md-6">
+    <div class="itembg container">
+      <p class="itembg">education <i class="fas fa-arrow-right"></i></p>
+      <ul class="items">
+        @for(education of userEducation ; track education.id){
+        <li class="item">
+          <div class="item_icon">
+            <i class="fa-solid fa-building-columns"></i>
+          </div>
+          <div>
+            <p class="year">{{education.start_at}} - {{education.end_at}}</p>
+            <p class="title">{{education.title}}</p>
+            <p class="place">{{education.institution}}</p>
+          </div>
+          <span class="dot"></span>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="experience-section col-md-6">
+    <div class="itembg container">
+      <p class="itembg">experience <i class="fas fa-arrow-right"></i></p>
+      <ul class="items">
+        @for(experience of userExperience ;track experience.id ){
+          <li class="item">
+            <div class="item_icon">
+              <i class="fa-solid fa-briefcase"></i>
+            </div>
+            <div>
+              <p class="year">{{experience.start_at}} - {{experience.end_at}}</p>
+              <p class="title">{{experience.title}}</p>
+              <p class="place">{{experience.company}}</p>
+            </div>
+            <span class="dot"></span>
+          </li>
+        }
+
+      </ul>
+    </div>
+  </div>
+</section>

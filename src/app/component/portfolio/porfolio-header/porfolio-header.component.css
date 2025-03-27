@@ -1,0 +1,144 @@
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar {
+  padding: 30px 17px;
+  background-color: var(--portfolio-sections-bg);
+  color: var(--text-color);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+  margin-bottom: 25px;
+  overflow: hidden;
+  height: fit-content;
+  transition: height .5s ease-in-out;
+  -webkit-transition: height .5s ease-in-out;
+  -moz-transition: height .5s ease-in-out;
+  -ms-transition: height .5s ease-in-out;
+  -o-transition: height .5s ease-in-out;
+}
+
+.top_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.site_icon {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.site_icon p {
+  font-size: 1.5rem;
+}
+
+.site_icon_container .btnShow {
+  color: white;
+}
+
+.site_icon_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hideList{
+  height: 90px;
+}
+.fa-wind {
+  padding: 12px;
+  background-color: var(--portfolio-hover-bg);
+  font-size: 21px;
+  color: var(--text-color);
+}
+
+.user_header {
+  background-color: var(--portfolio-user-bg);
+  padding: 11px;
+  align-items: center;
+  margin: 0;
+}
+
+.user_header .header_user_image {
+  overflow: hidden;
+}
+
+.user_header .header_user_image img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.header_info {
+  color: var(--text-color);
+}
+
+.header_info .text-italic {
+  font-size: 10px;
+}
+
+.header_info .text-italic i {
+  padding: 0 5px 0 0;
+  color: var(--text-color);
+}
+
+.list {
+  color: var(--text-color);
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+}
+
+.list li {
+  padding: 15px 0;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* gap: 7px; */
+}
+
+.list i {
+  padding: 0 15px;
+}
+
+.list li:hover,
+.active {
+  background-color: var(--portolio-list-hover);
+  color: var(--text-color) !important;
+  border-left: 5px solid;
+}
+
+/* portfolio-header.component.css */
+.footer {
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+}
+
+.footer a {
+  color: #333;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.footer a:hover {
+  color: #007bff;
+}
+
+.setting {
+  padding: 0 15px;
+}
+
+.btnShow button{
+  border: none;
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+@media screen and (min-width : 992px)  {
+  .sidebar{
+    height: fit-content !important;
+  }
+}

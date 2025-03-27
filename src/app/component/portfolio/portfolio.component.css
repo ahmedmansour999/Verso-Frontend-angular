@@ -1,0 +1,7 @@
+.portfolio_container{
+  width: 100%;
+  background-color: var( --portfolio-bg);
+  padding: 20px 10px;
+}
+
+

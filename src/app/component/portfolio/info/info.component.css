@@ -1,0 +1,124 @@
+p {
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+}
+
+section {
+  padding: 17px;
+  background-color: var(--portfolio-sections-bg);
+  color: var(--text-color);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+}
+
+.cardbg {
+  background-color: var(--portfolio-user-bg);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+}
+
+.map {
+  height: 100%;
+}
+
+.user_image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.user_image img {
+  width: 100%;
+}
+
+.info_card {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  padding: 8px;
+  justify-content: space-between;
+}
+
+.item {
+  background-color: var(--portfolio-sections-bg);
+  color: var(--text-color);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.col-md-8 {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.fa-arrow-right {
+  transform: rotate(-45deg);
+  margin: 0 0 0 5px;
+  color: blueviolet;
+}
+
+.fa-clock {
+  margin: 0 5px 0 0;
+  color: blueviolet;
+}
+
+.green_dot {
+  width: 8px;
+  height: 8px;
+  background-color: green;
+  border-radius: 50%;
+  margin: 0 5px 0 0;
+}
+
+.cardItem {
+  padding: 20px;
+}
+
+.cardItem p {
+  opacity: .6;
+}
+
+.Signature {
+  font-family: "Whisper", cursive;
+  font-weight: 400;
+  font-style: normal;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.col-md-6 {
+  margin: 0 0 20px 0;
+}
+
+.desc_text {
+  display: -webkit-box;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+
+.map {
+  position: relative;
+}
+
+.location {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  padding: 10px;
+  z-index: 9999;
+  background-color: var(--portfolio-sections-bg);
+  color: var(--text-color);
+}
+
+@media screen and (max-width : 767px) {
+  .info_card{
+    flex-direction: column;
+  }
+}

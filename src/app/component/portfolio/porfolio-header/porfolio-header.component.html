@@ -1,0 +1,89 @@
+<section class="sidebar" [class.hideList]="showList"  >
+  <div class="top_section">
+    <div class="site_icon_container">
+      <div class="site_icon">
+        <i class="fas fa-wind icon"></i>
+        <p class="text-uppercase">uspace</p>
+      </div>
+      <div class="btnShow d-lg-none"  >
+        <button (click)="toggleList()" > <i [ngClass]="!showList ? 'fas fa-close' : 'fa fa-ellipsis-h'"></i> </button>
+      </div>
+    </div>
+    <div class="user_header row">
+      <div class="header_user_image col col-4">
+        <img [src]="portfolioDetails.image" loading="lazy" alt="image" />
+      </div>
+      <div class="header_info col col-8">
+        <p class="text-uppercase">{{ portfolioDetails.name }}</p>
+        <p class="text-italic">{{ portfolioDetails.title }}</p>
+        <span class="text-italic">
+          <i class="fas fa-location-dot"></i>
+          {{ portfolioDetails.location }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <ul class="list">
+    <li routerLink="portfolio_home" routerLinkActive="active" class="active">
+      <i class="fas fa-house"></i>
+      <p>Home</p>
+    </li>
+    <li routerLink="portfolio_project" routerLinkActive="active">
+      <i class="fas fa-diagram-project"></i>
+      <p>Projects</p>
+    </li>
+    <li routerLink="portfolio_info" routerLinkActive="active">
+      <i class="fas fa-user"></i>
+      <p>About</p>
+    </li>
+    <li routerLink="portfolio_galary" routerLinkActive="active">
+      <i class="fas fa-images"></i>
+      <p>Gallery</p>
+    </li>
+    <li routerLink="portfolio_contact" routerLinkActive="active">
+      <i class="fas fa-envelope"></i>
+      <p>Contact</p>
+    </li>
+    <!-- <li routerLink="" routerLinkActive="active"  >
+      <i class="fas fa-newspaper"></i>
+      <p>Blogs</p>
+    </li> -->
+    <div class="setting">
+      <app-mode-btn />
+    </div>
+  </ul>
+  <!-- portfolio-header.component.html -->
+  <div class="footer">
+    @for (platform of portfolioDetails.social; track platform) { @if
+    (platform.facebook) {
+    <a [href]="platform.facebook" target="_blank" title="Facebook">
+      <i class="fab fa-facebook"></i>
+    </a>
+    } @if (platform.instagram) {
+    <a [href]="platform.instagram" target="_blank" title="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    } @if (platform.linkedin) {
+    <a [href]="platform.linkedin" target="_blank" title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    } @if (platform.twitter) {
+    <a [href]="platform.twitter" target="_blank" title="Twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    } @if (platform.github) {
+    <a [href]="platform.github" target="_blank" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    } @if (getUnknownPlatform(platform)) {
+    <a
+      [href]="getUnknownPlatform(platform)"
+      target="_blank"
+      title="Social Link"
+    >
+      <i class="fas fa-link"></i>
+    </a>
+    } }
+  </div>
+</section>

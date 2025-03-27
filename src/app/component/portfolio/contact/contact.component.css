@@ -1,0 +1,78 @@
+section {
+  margin: 50px 0 0 0;
+  padding: 17px;
+  background-color: var(--portfolio-sections-bg);
+  color: var(--text-color);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+}
+
+.itembg {
+  background-color: var(--portfolio-user-bg);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+p.itembg {
+  margin: 0 0 25px 0;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  gap: 25px;
+  margin: auto;
+
+}
+
+input.input_text {
+  border: none;
+}
+textarea.input_text{
+  border-color: var(--input-border) ;
+}
+
+.input_text {
+  border-bottom: 2px solid var(--input-border) !important;
+  outline: none;
+  background-color: transparent;
+  padding: 10px;
+  color: var(--text-color);
+}
+.invalidInput{
+  border-bottom: 1px solid red !important;
+}
+.error{
+  color: red;
+  font-size: 11px;
+}
+.fullWidth{
+  width: 100%;
+}
+.fullWidth input , .fullWidth textarea{
+  width: 100%;
+}
+.fullWidthBtn{
+  display: flex;
+  justify-content: flex-end;
+
+}
+.fullWidthBtn button{
+  /* padding: 8px; */
+  /* background-color: var(--portfolio-sections-bg);
+  color: var(--text-color); */
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+}
