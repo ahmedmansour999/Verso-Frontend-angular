@@ -1,0 +1,41 @@
+<!-- Your HTML remains largely the same -->
+<section>
+  <div class="header">
+    <p class="itembg">project <i class="fas fa-arrow-right"></i></p>
+    <div class="btns">
+      <button [disabled]="leftDisable" (click)="left()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <button [disabled]="rightDisable" (click)="right()">
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+  <div class="projects_container">
+    <div class="projects row">
+      @for (slide of slides; track slide.id) {
+      <div
+        #cardWidth
+        class="project_card col-md-6 col-lg-4"
+        [style.transform]="'translateX(' + translateX + 'px)'"
+      >
+        <div class="slide-card itembg">
+          <img
+            [src]="slide.image"
+            loading="lazy"
+            [alt]="slide.title"
+            class="slide-image"
+          />
+          <div class="slide-title">
+            <p>{{ slide.title }}</p>
+            <span>{{ slide.smallDesc }}</span>
+            <a [href]="slide.link" target="_blank" >
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>

@@ -14,7 +14,7 @@ export class HeaderService {
   }
 
   private useHeader(): void {
-    const storedType = localStorage.getItem('headerType');
+    const storedType = localStorage.getItem('headerType') || "navbar";
     this.headerType = storedType ? storedType : 'navbar';
     this.headerTypeSubject.next(this.headerType);
   }
@@ -23,7 +23,7 @@ export class HeaderService {
     return this.headerType;
   }
 
-  setHeaderType(type: 'navbar' | 'sidebar'): void {
+  setHeaderType(type: string): void {
     this.headerType = type;
     localStorage.setItem('headerType', type);
     this.headerTypeSubject.next(this.headerType);
@@ -34,5 +34,5 @@ export class HeaderService {
     localStorage.setItem('headerType', this.headerType);
     this.headerTypeSubject.next(this.headerType);
   }
-  
+
 }

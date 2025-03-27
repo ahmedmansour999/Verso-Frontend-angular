@@ -1,0 +1,20 @@
+<section>
+  <div class="header">
+    <p class="itembg"><i class="fas fa-trophy"></i> skills</p>
+  </div>
+  <div class="skills">
+    @for(skill of Skills ; track skill.id){
+    <p class="itembg">{{ skill.title }}</p>
+    }
+  </div>
+</section>
+<section>
+  <div class="header">
+    <p class="itembg"><i class="fas fa-globe"></i> Language</p>
+  </div>
+  <div class="lang">
+    @for(lang of Language ; track lang.id){
+    <p class="itembg">{{ lang.title }}</p>
+    }
+  </div>
+</section>

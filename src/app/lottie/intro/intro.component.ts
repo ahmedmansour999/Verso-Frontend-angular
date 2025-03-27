@@ -25,7 +25,7 @@ export class IntroComponent {
     this.animationItem = animationItem;
 
     animationItem.addEventListener('complete', () => {
-      this._Router.navigate(['/homePage']);
+      this._Router.navigate(['/uspace']);
     });
 
   }

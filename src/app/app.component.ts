@@ -11,5 +11,5 @@ import { ModeBtnComponent } from './template/Buttons/mode-btn/mode-btn.component
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'verso';
+  title = 'uspace';
 }

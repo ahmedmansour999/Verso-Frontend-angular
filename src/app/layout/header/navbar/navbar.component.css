@@ -50,11 +50,32 @@ section {
   cursor: pointer;
 }
 
+.main li p {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-190%);
+  transition: transform .2s ease-in-out;
+}
+
 .main li:hover {
   background-color: blueviolet;
   color: white;
 }
 
+.main li:hover p,
+.main li.active p {
+  transform: translateY(-50%);
+}
+
+
+.trans {
+  transition: transform .2s ease-in-out;
+}
+
+.main li:hover .trans,
+.main li.active .trans {
+  transform: translateY(200%);
+}
 
 .main li::before {
   content: attr(data-title);
@@ -126,7 +147,7 @@ section {
   cursor: pointer;
   box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.1);
   line-height: 1;
-  border : none ;
+  border: none;
   color: white;
 }
 

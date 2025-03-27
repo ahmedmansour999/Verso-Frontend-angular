@@ -1,0 +1,56 @@
+<section>
+  <div class="contact_container">
+    <h1>Contact Me</h1>
+    <form class="contact" [formGroup]="commentForm" (ngSubmit)="comment()">
+      <div class="fullWidth">
+        <input
+          type="email"
+          class="input_text"
+          placeholder="Email"
+          formControlName="email"
+          autocomplete
+          [class.invalidInput]="emailControl?.touched && emailControl?.invalid"
+        />
+        @if (emailControl!.touched && emailControl!.errors) {
+        <div class="error-messages">
+          @if (emailControl!.errors['required']) {
+          <p class="error">Email is required</p>
+          } @if (emailControl!.errors['email'] ||
+          emailControl!.errors['pattern']) {
+          <p class="error">Please enter a valid email address</p>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="fullWidth">
+        <textarea
+          rows="5"
+          class="input_text"
+          placeholder="text your message"
+          formControlName="message"
+          [class.invalidInput]="emailControl?.touched && emailControl?.invalid"
+        ></textarea>
+        @if (messageControl!.touched && messageControl!.errors) {
+        <div class="error-messages">
+          @if (messageControl!.errors['required']) {
+          <p class="error">Message is required</p>
+          } @if (messageControl!.errors['minlength']) {
+          <p class="error">Message must be at least 5 characters long</p>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="fullWidthBtn">
+        <button
+          type="submit"
+          [disabled]="commentForm.invalid || commentForm.pristine"
+          class="btn btn-primary"
+        >
+          Send <i class="fas fa-envelope"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

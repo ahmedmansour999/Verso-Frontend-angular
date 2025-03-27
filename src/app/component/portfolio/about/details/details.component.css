@@ -1,0 +1,33 @@
+.details {
+  margin-top: 50px;
+}
+
+.item {
+  padding: 17px;
+  background-color: var(--portfolio-sections-bg);
+  color: var(--text-color);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+}
+
+.itembg {
+  background-color: var(--portfolio-user-bg);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+.col-md-4 {
+  margin-bottom: 25px;
+}
+
+.num {
+  font-size: 2.5rem;
+  font-weight: bold;
+}

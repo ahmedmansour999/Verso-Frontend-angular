@@ -13,6 +13,21 @@
   --comment-bg : aliceblue ;
   --coment-text : black ;
   --footer-bg: white ;
+
+
+  /* ################# Portfolio theme ########### */
+  --portfolio-bg : #F6F8FB ;
+  --portfolio-hover-bg : #F6F8FB ;
+  --portfolio-sections-bg : white ;
+  --portfolio-user-bg : #9ecbf738 ;
+  --portfolio-sections-shadow : #00000014 ;
+  --portolio-list-hover : #9ecbf738 ;
+  --input-border : #9ecbf7de ;
+
+
+
+
+
 }
 
 .dark-theme {
@@ -29,6 +44,18 @@
   --comment-bg : black ;
   --coment-text : white ;
   --footer-bg: #212529 ;
+
+    /* ################# Portfolio theme ########### */
+    --portfolio-bg : black ;
+    --portfolio-sections-bg : #04080B ;
+    --portfolio-sections-shadow : #f7f7f71f;;
+    --portfolio-user-bg : #071418 ;
+    --portfolio-hover-bg : #071418;
+    --portolio-list-hover : #0d6efd ;
+    --input-border : blueviolet ;
+
+
+
 
 }
 .text-jop{
