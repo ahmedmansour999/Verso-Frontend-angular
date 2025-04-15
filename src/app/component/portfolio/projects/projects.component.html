@@ -21,14 +21,14 @@
       >
         <div class="slide-card itembg">
           <img
-            [src]="slide.image"
+            [src]="baseUrl +slide.image"
             loading="lazy"
             [alt]="slide.title"
             class="slide-image"
           />
           <div class="slide-title">
             <p>{{ slide.title }}</p>
-            <span>{{ slide.smallDesc }}</span>
+            <span>{{ slide.short_description }}</span>
             <a [href]="slide.link" target="_blank" >
               <i class="fas fa-arrow-right"></i>
             </a>

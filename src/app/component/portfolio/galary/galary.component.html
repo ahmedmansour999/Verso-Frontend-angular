@@ -11,9 +11,9 @@
     </div>
   </div>
   <div class="galary row">
-    @for(image of images ; track image.id ){
+    @for(certification of certifications ; track certification.id ){
     <div  #cardWidth class="galary-item col-md-4 col-lg-3" [style.transform]="'translateX(' + translateX + 'px)'">
-      <img [src]="image.image" [alt]="image.title"  loading="lazy" />
+      <img [src]="baseUrl + certification.image" [alt]="certification.title"  loading="lazy" />
     </div>
     }
   </div>

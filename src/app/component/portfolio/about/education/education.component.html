@@ -9,9 +9,9 @@
             <i class="fa-solid fa-building-columns"></i>
           </div>
           <div>
-            <p class="year">{{education.start_at}} - {{education.end_at}}</p>
-            <p class="title">{{education.title}}</p>
-            <p class="place">{{education.institution}}</p>
+            <p class="year">{{education.start_date}} / {{education.end_date}}</p>
+            <p class="title">{{education.education}}</p>
+            <p class="place">{{education.Specialization}}</p>
           </div>
           <span class="dot"></span>
         </li>
@@ -29,8 +29,8 @@
               <i class="fa-solid fa-briefcase"></i>
             </div>
             <div>
-              <p class="year">{{experience.start_at}} - {{experience.end_at}}</p>
-              <p class="title">{{experience.title}}</p>
+              <p class="year">{{experience.start_date}} / {{experience.is_current ? 'now' : experience.end_date}}</p>
+              <p class="title">{{experience.role}}</p>
               <p class="place">{{experience.company}}</p>
             </div>
             <span class="dot"></span>

@@ -19,6 +19,8 @@ import { loadingInterceptor } from './Interceptors/loading.interceptor';
 import { errorPageInterceptor } from './Interceptors/error-page.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { tokenInterceptor } from './Interceptors/token.interceptor';
+import { authInterceptor } from './Interceptors/auth.interceptor';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,13 +32,13 @@ export const appConfig: ApplicationConfig = {
 
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes ,  withPreloading(PreloadAllModules)),
-    provideClientHydration(withEventReplay(), withI18nSupport() ),
+    provideClientHydration(withEventReplay() ),
     provideAnimationsAsync(),
     provideLottieOptions({ player: () => player }),
     provideCacheableAnimationLoader(),
     provideNativeDateAdapter(),
     provideHttpClient(
-      withInterceptors([loadingInterceptor , errorPageInterceptor])
+      withInterceptors([loadingInterceptor , errorPageInterceptor , tokenInterceptor , authInterceptor])
     ) ,
     importProvidersFrom(
       TranslateModule.forRoot({

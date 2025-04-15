@@ -10,4 +10,4 @@ import { FooterComponent } from '../../layout/footer/footer.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {}
+export class HomeComponent {  }

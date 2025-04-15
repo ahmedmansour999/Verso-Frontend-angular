@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {  RouterOutlet } from '@angular/router';
 import { PorfolioHeaderComponent } from './porfolio-header/porfolio-header.component';
 
 
@@ -10,5 +10,9 @@ import { PorfolioHeaderComponent } from './porfolio-header/porfolio-header.compo
   styleUrl: './portfolio.component.css'
 })
 export class PortfolioComponent{
+
+  constructor(){
+
+  }
 
 }

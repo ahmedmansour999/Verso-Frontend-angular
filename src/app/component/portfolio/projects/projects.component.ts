@@ -5,6 +5,17 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { UserService } from '../../../Api/user/user.service';
+import { environment } from '../../../../environments/environment';
+
+interface Iprojects {
+  id: number;
+  title: string;
+  short_description: string;
+  description: string;
+  link: string;
+  image: string;
+}
 
 @Component({
   selector: 'app-projects',
@@ -20,99 +31,28 @@ export class ProjectsComponent {
   translateX = 0;
   rightDisable: boolean = false;
   leftDisable: boolean = true;
+  baseUrl = environment.baseUrl
 
-  slides = [
+  slides: Iprojects[] = [
     {
-      id: 1,
+      id: 0,
       image:
         'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 1',
-    },
-    {
-      id: 2,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 2',
-    },
-    {
-      id: 3,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 3',
-    },
-    {
-      id: 4,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 4',
-    },
-    {
-      id: 5,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 5',
-    },
-    {
-      id: 6,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 6',
-    },
-    {
-      id: 7,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 7',
-    },
-    {
-      id: 8,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 8',
-    },
-    {
-      id: 9,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 9',
-    },
-    {
-      id: 10,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 10',
-    },
-    {
-      id: 11,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      smallDesc: 'SCO',
-      link:"http//github.com",
-      title: 'Card 11',
+      short_description: '',
+      description: '',
+      link: '',
+      title: '',
     },
   ];
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private _userService: UserService
+  ) {
+    _userService.fetchUserData().subscribe((data) => {
+      this.slides  = data.portfolio.projects ;
+    });
+  }
 
   ngAfterViewInit(): void {
     this.updateCardWidth();

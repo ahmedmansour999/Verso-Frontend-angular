@@ -1,7 +1,9 @@
 .body{
   background-color:var(--body-bg) ;
+  overflow: hidden;
   min-height: 100vh;
 }
+
 .header{
   z-index: 9999999;
 }

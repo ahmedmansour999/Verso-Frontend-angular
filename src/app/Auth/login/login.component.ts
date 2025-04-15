@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { LottieAnimationLoginComponent } from "../../lottie/lottie-animation-login/lottie-animation-login.component";
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Token } from '../../Class/token.service';
 
 
@@ -41,7 +41,7 @@ export class LoginComponent {
   event: any;
   LoginMsg :string = "" ;
 
-  constructor( private _AuthService:AuthService  , private _TokenClass : Token , private _Router : Router ) {}
+  constructor( private _AuthService:AuthService  , private _TokenClass : Token , private _Router : Router  ) {}
 
   ngOnInit(): void {}
 
@@ -65,6 +65,8 @@ export class LoginComponent {
           this.LoginMsg = res.message ;
           this._TokenClass.setToken(res.token) ;
           this._Router.navigate(['/home'])
+         // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
         },
         error : (res) => {
           this.LoginMsg = res.error.message ;

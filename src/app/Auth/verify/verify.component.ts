@@ -85,7 +85,7 @@ export class VerifyComponent {
       const otp = Object.values(this.verifyOtp.value).join('');
       this.VerifyOtp.verify({ "otp": otp }).subscribe({
         next: () => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           if (error.error && typeof error.error === 'object') {

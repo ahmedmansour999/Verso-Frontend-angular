@@ -1,4 +1,13 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { UserService } from '../../../Api/user/user.service';
+import { environment } from '../../../../environments/environment';
+
+interface ICertification {
+  id: number;
+  image: string;
+  title: string;
+  link: string;
+}
 
 @Component({
   selector: 'app-galary',
@@ -12,78 +21,25 @@ export class GalaryComponent {
   cardWidth: number = 0;
   translateX = 0;
   rightDisable: boolean = false;
-  leftDisable: boolean = true;
+  leftDisable: boolean = false;
+  baseUrl = environment.baseUrl ;
 
-  user_details = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    phone: '1234567890',
-    education: [
-      {
-        id: 1,
-        title: 'Bachelor of Science in Computer Science',
-        institution: 'University of Technology',
-        start_at: '2024',
-        end_at: 'now',
-      },
-    ],
-    experience: [
-      {
-        id: 1,
-        title: 'Software Engineer',
-        company: 'ABC Company',
-        start_at: '2024',
-        end_at: 'now',
-      },
-    ],
-    images: [
-      {
-        id: 1,
-        title: 'Eccomerce Image',
-        image:
-          'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D',
-      },
-      {
-        id: 2,
-        title: 'Eccomerce Image',
-        image:
-          'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D',
-      },
-      {
-        id: 13,
-        title: 'Eccomerce Image',
-        image:
-          'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D',
-      },
-      {
-        id: 14,
-        title: 'Eccomerce Image',
-        image:
-          'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D',
-      },
-      {
-        id: 15,
-        title: 'Eccomerce Image',
-        image:
-          'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D',
-      },
-      {
-        id: 16,
-        title: 'Eccomerce Image',
-        image:
-          'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D',
-      },
-      {
-        id: 17,
-        title: 'Eccomerce Image',
-        image:
-          'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D',
-      },
-    ],
-  };
+  certificationsData: ICertification[] = [
+    {
+      id: 1,
+      image: '',
+      title: '',
+      link: '',
+    }
+  ];
+  constructor(private _userService : UserService){
+    _userService.fetchUserData().subscribe((data)=>{
+      this.certificationsData = data.portfolio.certifications ;
+    })
+  }
 
-  public get images() {
-    return this.user_details.images;
+  public get certifications() {
+    return this.certificationsData;
   }
 
   ngAfterViewInit(): void {
@@ -119,7 +75,7 @@ export class GalaryComponent {
 
   private updateButtonStates(): void {
     this.leftDisable = this.currentIndex <= 0;
-    this.rightDisable = this.currentIndex + 3 >= this.images.length;
+    this.rightDisable = this.currentIndex + 3 >= this.certificationsData.length;
   }
 
   onResize(): void {

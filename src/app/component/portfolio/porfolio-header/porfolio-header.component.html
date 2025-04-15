@@ -11,14 +11,14 @@
     </div>
     <div class="user_header row">
       <div class="header_user_image col col-4">
-        <img [src]="portfolioDetails.image" loading="lazy" alt="image" />
+        <img [src]="userDetails.image" loading="lazy" alt="image" />
       </div>
       <div class="header_info col col-8">
-        <p class="text-uppercase">{{ portfolioDetails.name }}</p>
-        <p class="text-italic">{{ portfolioDetails.title }}</p>
+        <p class="text-uppercase">{{ userDetails.name }}</p>
+        <p class="text-italic">{{ userDetails.specialization }}</p>
         <span class="text-italic">
           <i class="fas fa-location-dot"></i>
-          {{ portfolioDetails.location }}</span
+          {{ userDetails.city }} {{ userDetails.country }}</span
         >
       </div>
     </div>
@@ -55,7 +55,7 @@
   </ul>
   <!-- portfolio-header.component.html -->
   <div class="footer">
-    @for (platform of portfolioDetails.social; track platform) { @if
+    @for (platform of userDetails.social; track platform) { @if
     (platform.facebook) {
     <a [href]="platform.facebook" target="_blank" title="Facebook">
       <i class="fab fa-facebook"></i>

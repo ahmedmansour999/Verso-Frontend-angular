@@ -1,0 +1,579 @@
+<section>
+  <form
+    [formGroup]="portfolio_form"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
+    @if (step === 1) {
+    <h2>Info</h2>
+    <div class="container step">
+      <!-- Graduate Section -->
+      <div class="section">
+        <label for="graduate">Graduate Year</label>
+        <div class="section_input">
+          <mat-form-field>
+            <mat-label>Date of Graduate</mat-label>
+            <input
+              id="graduate"
+              matInput
+              [matDatepicker]="dp"
+              formControlName="graduate"
+              [max]="currentYear"
+              readonly
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="dp"
+            ></mat-datepicker-toggle>
+            <mat-datepicker
+              #dp
+              startView="multi-year"
+              [startAt]="startDate"
+            ></mat-datepicker>
+          </mat-form-field>
+          @if (portfolio_form.get('graduate')?.errors &&
+          portfolio_form.get('graduate')?.touched) { @if
+          (portfolio_form.get('graduate')?.hasError('required')) {
+          <div class="error">Graduate year is required</div>
+          } }
+        </div>
+      </div>
+
+      <!-- Summary Section -->
+      <div class="section">
+        <label for="summary">Summary</label>
+        <div class="section_input">
+          <textarea
+            rows="6"
+            id="summary"
+            formControlName="summary"
+            placeholder="Enter summary"
+            required
+          ></textarea>
+          @if (portfolio_form.get('summary')?.errors &&
+          portfolio_form.get('summary')?.touched) { @if
+          (portfolio_form.get('summary')?.hasError('required')) {
+          <div class="error">Summary is required</div>
+          } }
+        </div>
+      </div>
+    </div>
+    <!-- Experience -->
+    } @else if (step === 2) {
+    <div class="container step">
+      <div class="section" formArrayName="experiences">
+        <div class="section_input">
+          @for (experience of experiences.controls; track experience; let i =
+          $index) {
+          <div [formGroupName]="i" class="experience-entry step">
+            <h2>Experience #{{ i + 1 }}</h2>
+
+            <div class="form-group section mt-5">
+              <label for="company-{{ i }}">Company</label>
+              <div class="section_input">
+                <input
+                  id="company-{{ i }}"
+                  formControlName="company"
+                  placeholder="Enter company name"
+                  class="input"
+                />
+                @if (experience.get('company')?.errors &&
+                experience.get('company')?.touched) { @if
+                (experience.get('company')?.hasError('required')) {
+                <div class="error">The company is required</div>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <label for="role-{{ i }}">Role</label>
+              <div class="section_input">
+                <input
+                  id="role-{{ i }}"
+                  formControlName="role"
+                  placeholder="Enter your role"
+                  class="input"
+                />
+                @if (experience.get('role')?.errors &&
+                experience.get('role')?.touched) { @if
+                (experience.get('role')?.hasError('required')) {
+                <div class="error">Role is required</div>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <label for="startPicker-{{ i }}">Start at</label>
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>Start Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="startPicker"
+                    formControlName="startYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="startPicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #startPicker
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (experience.get('startYear')?.errors &&
+                experience.get('startYear')?.touched) { @if
+                (experience.get('startYear')?.hasError('required')) {
+                <div class="error">Start year is required</div>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <label for="endPicker-{{ i }}">End at</label>
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>End Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="endPicker"
+                    formControlName="endYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="endPicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #endPicker
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (experience.get('endYear')?.errors &&
+                experience.get('endYear')?.touched) { @if
+                (experience.get('endYear')?.hasError('required')) {
+                <div class="error">End year is required</div>
+                } @if (experience.get('endYear')?.hasError('endBeforeStart')) {
+                <div class="error">End date must be after start date</div>
+                } }
+              </div>
+            </div>
+
+            @if (experiences.length > 1) {
+            <button
+              type="button"
+              (click)="removeExperience(i)"
+              class="btn-remove btn btn-remove"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            }
+          </div>
+          }
+
+          <div class="add-btn-container">
+            <button
+              type="button"
+              (click)="addExperience()"
+              class="btn-add btn btn-success"
+            >
+              <i class="fas fa-plus"></i> Add Experience
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Education -->
+    }@else if(step === 3){
+    <div class="container step">
+      <div class="section" formArrayName="educations">
+        <div class="section_input">
+          @for (education of educations.controls; track education; let i =
+          $index) {
+          <div [formGroupName]="i" class="experience-entry step">
+            <h2>education #{{ i + 1 }}</h2>
+
+            <div class="form-group section mt-5">
+              <label for="education-{{ i }}">Education </label>
+              <div class="section_input">
+                <input
+                  id="education-{{ i }}"
+                  formControlName="education"
+                  placeholder="Enter education name"
+                  class="input"
+                />
+                @if (education.get('education')?.errors &&
+                education.get('education')?.touched) { @if
+                (education.get('education')?.hasError('required')) {
+                <div class="error">The education is required</div>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <label for="specialization-{{ i }}">Specialization</label>
+              <div class="section_input">
+                <input
+                  id="specialization-{{ i }}"
+                  formControlName="specialization"
+                  placeholder="Enter your Specialization"
+                  class="input"
+                />
+                @if (education.get('specialization')?.errors &&
+                education.get('specialization')?.touched) { @if
+                (education.get('specialization')?.hasError('required')) {
+                <div class="error">specialization is required</div>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <label for="startPickerEducation-{{ i }}">Start at</label>
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>Start Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="startPickerEducation"
+                    formControlName="startYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="startPickerEducation"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #startPickerEducation
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (education.get('startYear')?.errors &&
+                education.get('startYear')?.touched) { @if
+                (education.get('startYear')?.hasError('required')) {
+                <div class="error">Start year is required</div>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <label for="endPickerEducation-{{ i }}">End at</label>
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>End Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="endPickerEducation"
+                    formControlName="endYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="endPickerEducation"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #endPickerEducation
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (education.get('endYear')?.errors &&
+                education.get('endYear')?.touched) { @if
+                (education.get('endYear')?.hasError('required')) {
+                <div class="error">End year is required</div>
+                } @if (education.get('endYear')?.hasError('endBeforeStart')) {
+                <div class="error">End date must be after start date</div>
+                } }
+              </div>
+            </div>
+
+            @if (educations.length > 1) {
+            <button
+              type="button"
+              (click)="removeEducation(i)"
+              class="btn-remove btn btn-remove"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            }
+          </div>
+          }
+
+          <div class="add-btn-container">
+            <button
+              type="button"
+              (click)="addEducation()"
+              class="btn-add btn btn-success"
+            >
+              <i class="fas fa-plus"></i> Add Education
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }@else if(step === 4){
+    <div class="container step">
+      <div class="section" formArrayName="projects">
+        <div class="section_input">
+          @for (project of projects.controls; track project; let i = $index) {
+          <div [formGroupName]="i" class="experience-entry step">
+            <h2>project #{{ i + 1 }}</h2>
+
+            <div class="form-group section mt-5">
+              <label for="project-{{ i }}">Project Name</label>
+              <div class="section_input">
+                <input
+                  id="project-{{ i }}"
+                  formControlName="title"
+                  placeholder="Enter project name"
+                  class="input"
+                />
+                @if (project.get('title')?.errors &&
+                project.get('title')?.touched) { @if
+                (project.get('title')?.hasError('required')) {
+                <div class="error">The project is required</div>
+                } }
+              </div>
+            </div>
+            <div class="form-group section">
+              <label for="project-{{ i }}">Hint</label>
+              <div class="section_input">
+                <input
+                  id="project-{{ i }}"
+                  formControlName="smallDesc"
+                  placeholder="Small Description "
+                  class="input"
+                />
+                @if (project.get('smallDesc')?.errors &&
+                project.get('smallDesc')?.touched) { @if
+                (project.get('smallDesc')?.hasError('required')) {
+                <div class="error">The Hint is required</div>
+                } @if (project.get('smallDesc')?.hasError('min')) {
+                <div class="error">min length is 3 chara</div>
+                } }
+              </div>
+            </div>
+            <div class="form-group section">
+              <label for="desc">Description</label>
+              <div class="section_input">
+                <textarea
+                  rows="6"
+                  id="desc"
+                  formControlName="desc"
+                  placeholder="Enter Description"
+                  required
+                ></textarea>
+                @if (project.get('desc')?.errors &&
+                project.get('desc')?.touched) { @if
+                (project.get('desc')?.hasError('required')) {
+                <div class="error">the Description is required</div>
+                } @if (project.get('desc')?.hasError('min')) {
+                <div class="error">min length is 3 chare</div>
+                } }
+              </div>
+            </div>
+            <div class="form-group section">
+              <label for="project-{{ i }}">Link</label>
+              <div class="section_input">
+                <input
+                  id="project-{{ i }}"
+                  formControlName="link"
+                  placeholder="Project Link "
+                  class="input"
+                />
+                @if (project.get('link')?.errors &&
+                project.get('link')?.touched) { @if
+                (project.get('link')?.hasError('required')) {
+                <div class="error">The Link is required</div>
+                } }
+              </div>
+            </div>
+            <div class="form-group section">
+              <label for="project-{{ i }}">Image</label>
+              <div class="section_input">
+                <input
+                  id="project-{{ i }}"
+                  formControlName="img"
+                  placeholder="Small Description "
+                  class="input"
+                  type="file"
+                  accept="image/*"
+                  (change)="UploadImage($event, i)"
+                />
+                @if (project.get('img')?.errors && project.get('img')?.touched)
+                { @if (project.get('img')?.hasError('required')) {
+                <div class="error">image is required</div>
+                } } @if(getPreviewUrl(i)){
+
+                <div class="projrct_img">
+                  <img
+                    [src]="getPreviewUrl(i)"
+                    alt="Image Preview"
+                    style="max-width: 200px; margin-top: 10px"
+                  />
+                </div>
+                }
+              </div>
+            </div>
+
+            @if (projects.length > 1) {
+            <button
+              type="button"
+              (click)="removeProject(i)"
+              class="btn-remove btn btn-remove"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            }
+          </div>
+          }
+
+          <div class="add-btn-container">
+            <button
+              type="button"
+              (click)="addProject()"
+              class="btn-add btn btn-success"
+            >
+              <i class="fas fa-plus"></i> Add project
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }@else if( step === 5 ){
+    <div class="container step">
+      <div class="section" formArrayName="certifications">
+        <div class="section_input">
+          @for (certification of certifications.controls; track certification;
+          let i = $index) {
+          <div [formGroupName]="i" class="experience-entry step">
+            <h2>certification #{{ i + 1 }}</h2>
+            <div class="form-group section">
+              <label for="certification-{{ i }}">title</label>
+              <div class="section_input">
+                <input
+                  id="certification-{{ i }}"
+                  formControlName="title"
+                  placeholder="certification title "
+                  class="input"
+                />
+                @if (certification.get('title')?.errors &&
+                certification.get('title')?.touched) { @if
+                (certification.get('title')?.hasError('required')) {
+                <div class="error">The title is required</div>
+                } }
+              </div>
+            </div>
+            <div class="form-group section">
+              <label for="certification-{{ i }}">Link</label>
+              <div class="section_input">
+                <input
+                  id="certification-{{ i }}"
+                  formControlName="link"
+                  placeholder="certification Link "
+                  class="input"
+                />
+                @if (certification.get('link')?.errors &&
+                certification.get('link')?.touched) { @if
+                (certification.get('link')?.hasError('required')) {
+                <div class="error">The Link is required</div>
+                } }
+              </div>
+            </div>
+            <div class="form-group section">
+              <label for="certification-{{ i }}">certification</label>
+              <div class="section_input">
+                <input
+                  id="certification-{{ i }}"
+                  formControlName="image"
+                  placeholder="certification image "
+                  class="input"
+                  type="file"
+                  accept="image/*"
+                  (change)="UploadCerImage($event, i)"
+                />
+                @if (certification.get('image')?.errors &&
+                certification.get('image')?.touched) { @if
+                (certification.get('image')?.hasError('required')) {
+                <div class="error">image is required</div>
+                } } @if(getCertificationUrl(i)){
+
+                <div class="projrct_img">
+                  <img
+                    [src]="getCertificationUrl(i)"
+                    alt="Image Preview"
+                    style="max-width: 200px; margin-top: 10px"
+                  />
+                </div>
+                }
+              </div>
+            </div>
+
+            @if (certifications.length > 1) {
+            <button
+              type="button"
+              (click)="removeCertification(i)"
+              class="btn-remove btn btn-remove"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            }
+          </div>
+          }
+
+          <div class="add-btn-container">
+            <button
+              type="button"
+              (click)="addCertification()"
+              class="btn-add btn btn-success"
+            >
+              <i class="fas fa-plus"></i> Add certification
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <div class="btn_container">
+      <!-- Back Button - completely hidden on first step -->
+      @if (step !== 1) {
+      <button
+        class="btn btn-success"
+        (click)="back()"
+        aria-label="Previous step"
+        type="button"
+      >
+        Back
+      </button>
+      }
+
+      <!-- Rest remains the same -->
+      @if (step < 5) {
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="next()"
+        aria-label="Next step"
+      >
+        Next
+      </button>
+      } @if (step === 5) {
+      <button class="btn btn-dark"   type="submit" aria-label="Submit form">
+        Finish
+      </button>
+      }
+    </div>
+  </form>
+</section>

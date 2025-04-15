@@ -1,3 +1,4 @@
+import { UserService } from './../../../Api/user/user.service';
 import { Component } from '@angular/core';
 import { ModeBtnComponent } from '../../../template/Buttons/mode-btn/mode-btn.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -12,53 +13,82 @@ interface SocialLink {
   github?: string;
 }
 
-interface PortfolioDetails {
+interface IuserDetails {
   name: string;
-  title: string;
-  description: string;
-  image: string;
-  location: string;
-  social: SocialLink[];
+  birth: string;
+  specialization: string;
+  image?: string;
+  city: string;
+  country: string;
+  gender: string;
+  social?: SocialLink[];
 }
 
 @Component({
   selector: 'app-porfolio-header',
-  imports: [ModeBtnComponent , RouterLink , RouterLinkActive , CommonModule],
+  imports: [ModeBtnComponent, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './porfolio-header.component.html',
   styleUrl: './porfolio-header.component.css',
 })
 export class PorfolioHeaderComponent {
+  showList: boolean = true;
 
-
-  showList : boolean = true ;
-
-  portfolioDetails: PortfolioDetails = {
-    name: 'John Doe',
-    title: 'Software Developer',
-    description:
-      'I am a software developer with a passion for creating innovative solutions.',
+  userDetails: IuserDetails = {
+    name: '',
+    birth: '',
+    specialization: '',
     image:
       'https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-
-    location : "Egypt , Benisuef" ,
-    social : [
-      { facebook : "https://www.facebook.com" },
-      { instagram : "https://www.instagram.com" },
-      { linkedin : "https://www.linkedin.com" },
-      { twitter : "https://www.twitter.com" },
-      { github : "https://www.github.com" },
-      { githubas : "https://www.github.com" },
-    ]
+    city: '',
+    country: '',
+    gender: '',
+    social: [
+      { facebook: 'https://www.facebook.com' },
+      { instagram: 'https://www.instagram.com' },
+      { linkedin: 'https://www.linkedin.com' },
+      { twitter: 'https://www.twitter.com' },
+      { github: 'https://www.github.com' },
+      { githubas: 'https://www.github.com' },
+    ],
   };
 
-  constructor(){}
+  constructor(private _userService: UserService) {
+    _userService.currentUser().subscribe((data) => {
 
-  toggleList(){
-    this.showList = !this.showList ;
+      this.userDetails = {
+        name: `${data.first_name} ${data.last_name}`,
+        birth: data.birth,
+        specialization: data.specialization,
+        image:
+          data.image ||
+          'https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        city: data.city,
+        country: data.country,
+        gender: data.gender,
+        social: [
+          { facebook: 'https://www.facebook.com' },
+          { instagram: 'https://www.instagram.com' },
+          { linkedin: 'https://www.linkedin.com' },
+          { twitter: 'https://www.twitter.com' },
+          { github: 'https://www.github.com' },
+          { githubas: 'https://www.github.com' },
+        ],
+      };
+    });
+  }
+
+  toggleList() {
+    this.showList = !this.showList;
   }
 
   getUnknownPlatform(platform: SocialLink): string | null {
-    const knownPlatforms = ['facebook', 'instagram', 'linkedin', 'twitter', 'github'];
+    const knownPlatforms = [
+      'facebook',
+      'instagram',
+      'linkedin',
+      'twitter',
+      'github',
+    ];
     const platformKeys = Object.keys(platform);
 
     for (const key of platformKeys) {
@@ -69,7 +99,5 @@ export class PorfolioHeaderComponent {
     return null;
   }
 
-  ngOnInit(): void {
-    // this.porfolioDetails
-  }
+  ngOnInit(): void {}
 }

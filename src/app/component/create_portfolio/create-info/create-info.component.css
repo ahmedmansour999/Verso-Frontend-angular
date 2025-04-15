@@ -1,0 +1,123 @@
+section {
+  direction: ltr !important;
+  height: 100%;
+  padding: 100px 0;
+  position: relative;
+  height: 100%;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+form {
+  width: 100%;
+  background: var(--section-bg);
+  overflow: hidden;
+  padding: 15px;
+  margin: 50px;
+  color: var(--text-color);
+  border-radius: 15px;
+}
+
+h2 {
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+textarea {
+  padding: 10px;
+}
+
+.input {
+  padding: 10px;
+  outline: none;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+
+}
+
+.step .section {
+  display: flex;
+  align-items: flex-start;
+  align-content: center;
+  /* justify-content: space-evenly; */
+  width: 100%;
+  gap: 20px;
+}
+
+.step .section label {
+  min-width: 100px;
+  text-wrap: nowrap;
+}
+
+.step .section .section_input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.btn_container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 35px 0 0 0;
+}
+
+.experience-entry {
+  position: relative;
+  margin: 10px 0;
+  border-bottom: 1px solid black;
+  padding-bottom: 25px;
+}
+
+.btn-add {
+  margin-top: 5px;
+  background-color: green;
+}
+
+.btn-remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+}
+
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.add-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-add i,
+.btn-remove i {
+  color: white;
+}
+
+@media screen and (max-width:780px) {
+  .section {
+    flex-direction: column;
+  }
+
+  h2 {
+    font-size: 20px;
+    text-align: start;
+    margin-bottom: 0;
+  }
+}
