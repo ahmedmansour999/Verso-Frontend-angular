@@ -1,7 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   QueryList,
   ViewChildren,
 } from '@angular/core';
@@ -17,84 +19,117 @@ interface Iprojects {
   image: string;
 }
 
+interface IColumn {
+  id: number;
+  cards: Iprojects[];
+}
+
 @Component({
   selector: 'app-projects',
   standalone: true,
   imports: [],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsComponent {
   @ViewChildren('cardWidth') cardElements!: QueryList<ElementRef>;
   currentIndex = 0;
   cardWidth: number = 0;
+  columnWidth: number = 0;
+  containerWidth: number = 0;
+  visibleColumns: number = 2; // Default to 2 columns
   translateX = 0;
   rightDisable: boolean = false;
   leftDisable: boolean = true;
-  baseUrl = environment.baseUrl
+  baseUrl = environment.baseUrl;
+  readonly gap: number = 15; // 15px gap between columns
 
-  slides: Iprojects[] = [
-    {
-      id: 0,
-      image:
-        'https://www.shutterstock.com/shutterstock/photos/2264278429/display_1500/stock-photo-project-management-project-managers-streamline-tasks-and-progress-progress-planning-with-company-2264278429.jpg',
-      short_description: '',
-      description: '',
-      link: '',
-      title: '',
-    },
-  ];
+  slides: Iprojects[] = [];
+  groupedSlides: IColumn[] = [];
 
   constructor(
+    private _userService: UserService,
     private cdr: ChangeDetectorRef,
-    private _userService: UserService
-  ) {
-    _userService.fetchUserData().subscribe((data) => {
-      this.slides  = data.portfolio.projects ;
+    private el: ElementRef
+  ) {}
+
+  ngOnInit(): void {
+    this._userService.currentUser().subscribe((data) => {
+      this.slides = data.portfolio.projects;
+      this.groupSlides();
+      this.updateLayout();
+      this.cdr.markForCheck();
     });
   }
 
   ngAfterViewInit(): void {
-    this.updateCardWidth();
-    this.updateButtonStates();
+    this.updateLayout();
     this.cardElements.changes.subscribe(() => {
-      this.updateCardWidth();
+      this.updateLayout();
     });
   }
 
-  private updateCardWidth(): void {
+  private groupSlides(): void {
+    this.groupedSlides = [];
+    for (let i = 0; i < this.slides.length; i += 2) {
+      const columnCards = this.slides.slice(i, i + 2);
+      if (columnCards.length > 0) {
+        this.groupedSlides.push({
+          id: i / 2,
+          cards: columnCards,
+        });
+      }
+    }
+  }
+
+  private updateLayout(): void {
     if (this.cardElements.length > 0) {
-      this.cardWidth =
-        this.cardElements.first.nativeElement.getBoundingClientRect().width;
-      this.cdr.detectChanges();
+      const firstCard = this.cardElements.first.nativeElement;
+      this.cardWidth = firstCard.getBoundingClientRect().width;
+      const container = this.el.nativeElement.querySelector(
+        '.projects_container'
+      );
+      this.containerWidth = container.getBoundingClientRect().width;
+      this.columnWidth = this.cardWidth + this.gap; // Include 15px gap
+      this.visibleColumns = Math.floor(this.containerWidth / this.columnWidth);
+      this.visibleColumns = Math.min(2, Math.max(1, this.visibleColumns)); // 1 or 2 columns
+      this.updateButtonStates();
+      this.updateTranslateX();
     }
   }
 
   right(): void {
     if (!this.rightDisable) {
-      this.currentIndex += 1;
-      this.translateX = -this.currentIndex * this.cardWidth;
+      this.currentIndex += this.visibleColumns;
+      this.updateTranslateX();
       this.updateButtonStates();
     }
   }
 
   left(): void {
     if (!this.leftDisable) {
-      this.currentIndex -= 1;
-      this.translateX = -this.currentIndex * this.cardWidth;
+      this.currentIndex -= this.visibleColumns;
+      this.currentIndex = Math.max(0, this.currentIndex);
+      this.updateTranslateX();
       this.updateButtonStates();
     }
   }
 
-  private updateButtonStates(): void {
-    this.leftDisable = this.currentIndex <= 0;
-    this.rightDisable = this.currentIndex + 6 >= this.slides.length;
-    this.cdr.detectChanges();
+  private updateTranslateX(): void {
+    this.translateX = -this.currentIndex * this.columnWidth;
+    this.cdr.markForCheck();
   }
 
+  private updateButtonStates(): void {
+    this.leftDisable = this.currentIndex <= 0;
+    this.rightDisable =
+      this.currentIndex + this.visibleColumns >= this.groupedSlides.length;
+    this.cdr.markForCheck();
+  }
+
+  @HostListener('window:resize')
   onResize(): void {
-    this.updateCardWidth();
-    this.translateX = -this.currentIndex * this.cardWidth;
-    this.updateButtonStates();
+    this.updateLayout();
   }
 }

@@ -23,7 +23,6 @@ interface IEducation {
   end_date: string;
 }
 
-
 @Component({
   selector: 'app-education',
   imports: [],
@@ -31,34 +30,37 @@ interface IEducation {
   styleUrl: './education.component.css',
 })
 export class EducationComponent {
-  user_details: IUserDetails = {
-    education: [
-      {
-        id: 1,
-        education: '',
-        Specialization: '',
-        start_date: '',
-        end_date: '',
-      },
-    ],
-    experience: [
-      {
-        id: 1,
-        company: '',
-        role: '',
-        start_date: '',
-        end_date: '',
-        is_current: false,
-      },
-    ],
-  };
+  user_details: IUserDetails;
 
   constructor(private _userService: UserService) {
-    _userService.fetchUserData().subscribe((data) => {
+    this.user_details = {
+      education: [
+        {
+          id: 1,
+          education: '',
+          Specialization: '',
+          start_date: '',
+          end_date: '',
+        },
+      ],
+      experience: [
+        {
+          id: 1,
+          company: '',
+          role: '',
+          start_date: '',
+          end_date: '',
+          is_current: false,
+        },
+      ],
+    };
+  }
+  ngOnInit(): void {
+    this._userService.fetchUserData().subscribe((data) => {
       this.user_details = {
-        education : data.portfolio.educations ,
-        experience : data.portfolio.experiences ,
-      }
+        education: data.portfolio.educations,
+        experience: data.portfolio.experiences,
+      };
     });
   }
 

@@ -1,0 +1,106 @@
+<app-profile-image/>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <section class="home_section mb-4">
+    <h1>Skills</h1>
+    @if (isLoading) {
+    <div>Loading...</div>
+    } @else {
+    <div class="showSkills">
+      @for(skill of skills.controls; track skill.value.id; let i = $index) {
+      <div class="skill-container">
+        <p class="skill">{{ skill.value.title }}</p>
+        <button type="button" color="warn" (click)="removeSkill(i)">
+          <i class="fas fa-close"></i>
+        </button>
+      </div>
+      }
+    </div>
+    }
+    <div class="form-section">
+      <div class="inputContainer">
+        <div class="section_input skillInput" [formGroup]="newSkillForm">
+          <input
+            formControlName="title"
+            placeholder="Enter skill"
+            class="input"
+            (keyup.enter)="addSkill()"
+          />
+
+          <button
+            type="button"
+            class="skill_plus"
+            (click)="addSkill()"
+            [disabled]="newSkillForm.invalid"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        @if (newSkillForm.get('title')?.errors &&
+        newSkillForm.get('title')?.touched) {
+        @if(newSkillForm.get('title')?.hasError('required')) {
+        <div class="error">The skill is required</div>
+        } @if (newSkillForm.get('title')?.hasError('minlength')) {
+        <div class="error">Enter at least 3 characters</div>
+        } }
+      </div>
+    </div>
+  </section>
+  <section class="home_section">
+    <h1>Languages</h1>
+    @if (isLoading) {
+    <div>Loading...</div>
+    } @else {
+    <div class="showSkills">
+      @for(lang of languages.controls; track lang.value.id; let i = $index) {
+      <div class="skill-container">
+        <p class="skill">{{ lang.value.title }}</p>
+        <button type="button" color="warn" (click)="removeLanguage(i)">
+          <i class="fas fa-close"></i>
+        </button>
+      </div>
+      }
+    </div>
+    }
+    <div class="form-sections">
+      <div class="form-section">
+        <div class="inputContainer">
+          <div class="section_input skillInput" [formGroup]="newLangForm">
+            <input
+              formControlName="title"
+              placeholder="Enter language"
+              class="input"
+              (keyup.enter)="addLanguage()"
+            />
+
+            <button
+              type="button"
+              class="skill_plus"
+              (click)="addLanguage()"
+              [disabled]="newLangForm.invalid"
+            >
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        @if (newLangForm.get('title')?.errors &&
+        newLangForm.get('title')?.touched) {
+        @if(newLangForm.get('title')?.hasError('required')) {
+        <div class="error">The language is required</div>
+        } @if (newLangForm.get('title')?.hasError('minlength')) {
+        <div class="error">Enter at least 3 characters</div>
+        } }
+      </div>
+    </div>
+  </section>
+  <div class="form-actions">
+    <button
+      type="submit"
+      class="btn btn-warning btn-save"
+      [disabled]="formData.invalid || isLoading"
+    >
+      @if (isLoading) {
+      <i class="fas fa-spinner fa-spin"></i> Updating... } @else {
+      <i class="fas fa-save"></i> Save }
+    </button>
+  </div>
+</form>

@@ -1,0 +1,204 @@
+<section class="home_section">
+  <div class="header">
+    <div class="head">
+      <h2 class="title">Edit Experience</h2>
+      <button class="btn btn-success" routerLink="/profile/create-experience">
+        <i class="fas fa-plus"></i> Add Experience
+      </button>
+    </div>
+  </div>
+  <form
+    [formGroup]="formData"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
+    <div class="container step">
+      <div class="section" formArrayName="experiences">
+        <div class="section_input">
+          @for (experience of experiences.controls; track experience; let i =
+          $index) {
+          <div [formGroupName]="i" class="experience-entry step mt-5">
+            <div class="experience-header">
+              <h3>Experience #{{ i + 1 }}</h3>
+              @if (experiences.length > 1) {
+
+              <button
+                type="button"
+                class="btn btn-danger btn-remove"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#deleteModal-' + i"
+                *ngIf="experiences.length > 1"
+              >
+                <i class="fas fa-trash"></i> Remove
+              </button>
+              }
+
+              <div
+                class="modal fade"
+                [id]="'deleteModal-' + i"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Delete Permission
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      Delete {{ experience.get("company")?.value }}
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                        (click)="
+                          removeExperience(i, experience.get('id')?.value)
+                        "
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input [id]="'id-' + i" formControlName="id" type="hidden" />
+            <div class="form-group section">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>Experience</mat-label>
+                  <input
+                    matInput
+                    id="experience-{{ i }}"
+                    formControlName="company"
+                    placeholder="Enter Company name"
+                  />
+                  @if (experience.get('company')?.errors &&
+                  experience.get('company')?.touched) { @if
+                  (experience.get('company')?.hasError('required')) {
+                  <mat-error>company is required</mat-error>
+                  } @if (experience.get('company')?.hasError('minlength')) {
+                  <mat-error>Minimum 3 characters required</mat-error>
+                  } }
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>role</mat-label>
+                  <input
+                    matInput
+                    id="role-{{ i }}"
+                    formControlName="role"
+                    placeholder="Enter your role"
+                  />
+                  @if (experience.get('role')?.errors &&
+                  experience.get('role')?.touched) { @if
+                  (experience.get('role')?.hasError('required')) {
+                  <mat-error>role is required</mat-error>
+                  } @if (experience.get('role')?.hasError('minlength')) {
+                  <mat-error>Minimum 3 characters required</mat-error>
+                  } }
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>Start Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="startPickerExperience"
+                    formControlName="startYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="startPickerExperience"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #startPickerExperience
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (experience.get('startYear')?.errors &&
+                experience.get('startYear')?.touched) { @if
+                (experience.get('startYear')?.hasError('required')) {
+                <mat-error>Start year is required</mat-error>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>End Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="endPickerExperience"
+                    formControlName="endYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="endPickerExperience"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #endPickerExperience
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (experience.get('endYear')?.errors &&
+                experience.get('endYear')?.touched) { @if
+                (experience.get('endYear')?.hasError('required')) {
+                <mat-error>End year is required</mat-error>
+                } @if (experience.get('endYear')?.hasError('endBeforeStart')) {
+                <mat-error>End date must be after start date</mat-error>
+                } }
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-warning btn-save"
+        [disabled]="formData.invalid || isLoading"
+      >
+        @if (isLoading) {
+        <i class="fas fa-spinner fa-spin"></i> updating... } @else {
+        <i class="fas fa-save"></i> Save }
+      </button>
+    </div>
+  </form>
+</section>

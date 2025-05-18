@@ -3,16 +3,60 @@
     <div class="sidebar" [ngClass]="{ open: openMenu }">
       <div class="logo">Verso</div>
       <ul class="list">
-        <li><i class="fa fa-home mx-2"></i> {{ "HOME" | translate }}</li>
-        <li><i class="fa fa-home mx-2"></i> {{ "ABOUT" | translate }}</li>
-        <li><i class="fa fa-home mx-2"></i> {{ "SERVICES" | translate }}</li>
-        <li><i class="fa fa-home mx-2"></i> {{ "PORTFOLIO" | translate }}</li>
-        <li><i class="fa fa-home mx-2"></i> {{ "CONTACT" | translate }}</li>
+        <li
+          routerLink="/uspace/home"
+          routerLinkActive="active"
+          data-title="{{ 'HOME' | translate }}"
+        >
+          <i class="mx-2 fas fa-home trans"></i>
+          <p>{{ "HOME" | translate }}</p>
+        </li>
+        <li
+          routerLink="createportfolio"
+          routerLinkActive="active"
+          data-title="{{ 'ABOUT' | translate }}"
+        >
+          <i class="mx-2 fas fa-users trans"></i>
+          <p>{{ "ABOUT" | translate }}</p>
+        </li>
+
+        <li
+          routerLink="/profile"
+          routerLinkActive="active"
+          data-title="{{ 'PROFILE' | translate }}"
+        >
+          <i class="mx-2 fas fa-user trans"></i>
+          <p>{{ "PROFILE" | translate }}</p>
+        </li>
+        <li
+          routerLink="/portfolio"
+          routerLinkActive="active"
+          data-title="{{ 'PORTFOLIO' | translate }}"
+        >
+          <i class="mx-2 fas fa-palette trans"></i>
+          <p>{{ "PORTFOLIO" | translate }}</p>
+        </li>
+        <li
+          routerLink="/uspace/company"
+          routerLinkActive="active"
+          data-title="{{ 'COMPANIES' | translate }}"
+        >
+          <i class="mx-2 fas fa-briefcase trans"></i>
+          <p>{{ "COMPANIES" | translate }}</p>
+        </li>
+        <!-- <li
+          routerLink="/setting"
+          routerLinkActive="active"
+          data-title="{{ 'SETTING' | translate }}"
+        >
+          <i class=" mx-2 fas fa-cog trans"></i>
+          <p>{{ "SETTING" | translate }}</p>
+        </li> -->
       </ul>
-      <div class="profile">
-        <i class="fas fa-user mx-2"></i>
-        <a href=""> {{ "PROFILE" | translate }} </a>
-      </div>
+      <button class="profile" (click)="logout()" >
+        <i class="fas fa-right-from-bracket mx-2 trans"></i>
+        <p>{{ "LOGOUT" | translate }}</p>
+      </button>
 
       <button class="btnMenu" title="open" (click)="toggleMenu()">
         @if (openMenu == true) {
@@ -28,7 +72,7 @@
       <app-mode-btn />
       <div>
         <button (click)="showNavBar()">
-          <i class="fas fa-rotate"></i>
+          <i class=" mx-2 fas fa-rotate"></i>
         </button>
       </div>
     </div>

@@ -1,0 +1,61 @@
+<section class="sidebar" [class.hideList]="showList"  >
+  <div class="top_section">
+    <div class="site_icon_container">
+      <div class="site_icon"  routerLink="/uspace/home" style="cursor: pointer;" >
+        <i class="fas fa-wind icon"></i>
+        <p class="text-uppercase">uspace</p>
+      </div>
+      <div class="btnShow d-lg-none"  >
+        <button (click)="toggleList()" > <i [ngClass]="!showList ? 'fas fa-close' : 'fa fa-ellipsis-h'"></i> </button>
+      </div>
+    </div>
+    <div class="user_header row">
+      <div class="header_user_image col col-4">
+        <img [src]="profileImage" loading="lazy" alt="image" />
+      </div>
+      <div class="header_info col col-8">
+        <p class="text-uppercase">{{ userDetails.name }}</p>
+        <p class="text-italic">{{ userDetails.specialization }}</p>
+        <span class="text-italic">
+          <i class="fas fa-location-dot"></i>
+          {{ userDetails.city }} {{ userDetails.country }}</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="list">
+    <li routerLink="profile_home" routerLinkActive="active" class="active">
+      <i class="fas fa-house"></i>
+      <p>Home</p>
+    </li>
+    <li routerLink="info" routerLinkActive="active" class="active">
+      <i class="fas fa-user"></i>
+      <p>info</p>
+    </li>
+    <li routerLink="profile_project" routerLinkActive="active">
+      <i class="fas fa-diagram-project"></i>
+      <p>Projects</p>
+    </li>
+    <li routerLink="education" routerLinkActive="active">
+      <i class="fas fa-school"></i>
+      <p>Education</p>
+    </li>
+    <li routerLink="experience" routerLinkActive="active">
+      <i class="fas fa-briefcase "></i>
+      <p>Experience</p>
+    </li>
+    <li routerLink="profile_Certifications" routerLinkActive="active">
+      <i class="fas fa-images"></i>
+      <p>Certification</p>
+    </li>
+    <li routerLink="contact" routerLinkActive="active">
+      <i class="fas fa-envelope"></i>
+      <p>Contact</p>
+    </li>
+
+    <div class="setting">
+      <app-mode-btn />
+    </div>
+  </ul>
+
+</section>

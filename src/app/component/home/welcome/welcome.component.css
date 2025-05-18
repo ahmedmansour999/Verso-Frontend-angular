@@ -3,7 +3,7 @@
   padding: 100px 20px;
   color: var(--text-color);
   height: 100vh;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
   position: relative;
 }
 
@@ -23,8 +23,9 @@
   text-align: center;
   width: fit-content;
 }
+
 @media only screen and (max-width: 768px) {
-  .textContainer{
+  .textContainer {
     right: 0% !important;
   }
 }
@@ -56,10 +57,93 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
+.svg img{
+  width: auto !important ;
+}
 .container p {
   color: wheat;
   font-size: 1.5rem;
   padding: 0;
   margin: 0;
+}
+
+.modal {
+  z-index: 9999999999 !important;
+}
+
+.modal-dialog {
+  transform: translate(-50%, -50%) !important;
+  top: 50%;
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  max-width: 60% !important;
+}
+
+.mat-typography {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 50px;
+  overflow: hidden;
+}
+@media screen and ( max-width : 787px ){
+
+  .mat-typography {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 50px;
+    overflow: hidden;
+  }
+}
+
+.modal-content button {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  height: 100%;
+}
+
+.choiseComponent {
+  background: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  transition: top 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.choiseComponent p {
+  margin: 0;
+  position: absolute;
+  top: 100%;
+  background: #00000096;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+
+.choiseComponent:hover p {
+  top: 0%;
+}
+
+.choiseComponent p  {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.modal-content {
+  background: transparent !important;
+  overflow: hidden;
 }

@@ -57,6 +57,94 @@
           } }
         </div>
       </div>
+
+      <div class="section">
+        <label for="skills">skills</label>
+        <div class="skill_section">
+          <div class="section_input skillInput" [formGroup]="newSkillForm">
+            <input
+              id="skill"
+              formControlName="title"
+              placeholder="Enter skill"
+              class="input"
+              (keyup.enter)="addSkill()"
+            />
+            @if (newSkillForm.get('title')?.errors &&
+            newSkillForm.get('title')?.touched) {
+            @if(newSkillForm.get('title')?.hasError('required')) {
+            <div class="error">The skill is required</div>
+            } @if (newSkillForm.get('title')?.hasError('minlength')) {
+            <div class="error">Enter at least 3 characters</div>
+            } } @if (portfolio_form.get('skills')?.errors &&
+            portfolio_form.get('skills')?.touched) { @if
+            (portfolio_form.get('skills')?.hasError('minLengthArray')) {
+            <div class="error">At least one skills is required</div>
+            } }
+            <button
+              type="button"
+              class="skill_plus"
+              (click)="addSkill()"
+              [disabled]="newSkillForm.invalid"
+            >
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div class="showSkills">
+            @for( skill of skills.controls; let i = $index; track i ){
+            <div class="skill-container">
+              <p class="skill">{{ skill.value.title }}</p>
+              <button color="warn" (click)="removeSkills(i)">
+                <i class="fas fa-close"></i>
+              </button>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <label for="skills">Language</label>
+        <div class="skill_section">
+          <div class="section_input skillInput" [formGroup]="newLangForm">
+            <input
+              id="lang"
+              formControlName="title"
+              placeholder="Enter language"
+              class="input"
+              (keyup.enter)="addLang()"
+            />
+            @if (newLangForm.get('title')?.errors &&
+            newLangForm.get('title')?.touched) {
+            @if(newLangForm.get('title')?.hasError('required')) {
+            <div class="error">The language is required</div>
+            } @if (newLangForm.get('title')?.hasError('minlength')) {
+            <div class="error">enter correct language</div>
+            } } @if (portfolio_form.get('language')?.errors &&
+            portfolio_form.get('language')?.touched) { @if
+            (portfolio_form.get('language')?.hasError('minLengthArray')) {
+            <div class="error">At least one language is required</div>
+            } }
+            <button
+              type="button"
+              class="skill_plus"
+              (click)="addLang()"
+              [disabled]="newLangForm.invalid"
+            >
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div class="showSkills">
+            @for( lang of language.controls; let i = $index; track i ){
+            <div class="skill-container">
+              <p class="skill">{{ lang.value.title }}</p>
+              <button color="warn" (click)="removeLang(i)">
+                <i class="fas fa-close"></i>
+              </button>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Experience -->
     } @else if (step === 2) {
@@ -360,7 +448,7 @@
                 (project.get('smallDesc')?.hasError('required')) {
                 <div class="error">The Hint is required</div>
                 } @if (project.get('smallDesc')?.hasError('min')) {
-                <div class="error">min length is 3 chara</div>
+                <div class="error">min length is 3 char</div>
                 } }
               </div>
             </div>
@@ -570,7 +658,7 @@
         Next
       </button>
       } @if (step === 5) {
-      <button class="btn btn-dark"   type="submit" aria-label="Submit form">
+      <button class="btn btn-dark" type="submit" aria-label="Submit form">
         Finish
       </button>
       }

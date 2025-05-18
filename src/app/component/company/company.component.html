@@ -1,1 +1,74 @@
-<p>company works!</p>
+<div class="container">
+  <!-- Loading Indicator -->
+  <!-- <div *ngIf="loading" class="loading">Loading companies...</div> -->
+  <div *ngIf="loading" class="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+
+  <!-- Map -->
+  <div id="map" class="map"></div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <input
+      type="text"
+      class="input"
+      placeholder="Search by company name"
+      [(ngModel)]="searchTerm"
+      (input)="filterCompanies()"
+    />
+    <input
+      type="text"
+      class="input"
+      placeholder="Filter by industry/field"
+      [(ngModel)]="fieldFilter"
+      (input)="filterCompanies()"
+    />
+    <input
+      type="text"
+      class="input"
+      placeholder="Filter by city"
+      [(ngModel)]="locationFilter"
+      (input)="filterCompanies()"
+    />
+  </div>
+
+  <!-- Company List -->
+  <div class="company-list">
+    <div
+      *ngFor="let company of filteredCompanies"
+      class="company-card"
+      (click)="focusOnCompany(company)"
+      [ngStyle]="{
+        'background-image': 'url(' + company.image + ')',
+        'background-size': 'cover',
+        'background-position': 'center'
+      }"
+    >
+      <!-- <div class="img">
+        <img [src]="company.image" alt="">
+      </div> -->
+      <h3>{{ company.name }}</h3>
+      <p><strong>Field:</strong> {{ company.field }}</p>
+      <p><strong>City:</strong> {{ company.city }}</p>
+      <p><strong>Address:</strong> {{ company.address }}</p>
+      <div class="icon">
+        <p class="mail" *ngIf="company.mail !== 'N/A'">
+          <a [href]="'mailto:' + company.mail">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </p>
+        <p class="phone" *ngIf="company.phone !== 'N/A'">
+          <a [href]="'tel:' + company.phone">
+            <i class="fas fa-phone-alt"></i>
+          </a>
+        </p>
+        <p class="website" *ngIf="company.website !== 'N/A'">
+          <a href="{{ company.website }}" target="_blank"
+            ><i class="fas fa-globe"></i
+          ></a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

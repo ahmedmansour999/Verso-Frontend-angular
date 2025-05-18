@@ -1,0 +1,34 @@
+<section class="home_section image_section mb-4">
+  <div class="showProfileImage">
+      <img [src]="imageProfile" alt="Profile image" class="profile-image">
+  </div>
+
+  <form [formGroup]="imageForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="profileImage" class="file-upload-label">
+        <i class="fas fa-camera"></i> Change Profile Picture
+      </label>
+      <input
+        type="file"
+        id="profileImage"
+        accept="image/png, image/jpeg, image/gif, image/bmp"
+        formControlName="image"
+        accept="image/*"
+        (change)="onFileChange($event)"
+        class="file-input"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!imageForm.valid || loading"
+    >
+      @if (loading) {
+        <i class="fas fa-spinner fa-spin"></i>
+      } @else {
+        Upload
+      }
+    </button>
+  </form>
+</section>

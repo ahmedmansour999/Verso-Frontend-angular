@@ -121,3 +121,57 @@ textarea {
     margin-bottom: 0;
   }
 }
+
+.skill_section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.skillInput {
+  position: relative;
+  display: flex;
+  gap: 5px;
+}
+
+.skill_plus {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: darkorchid;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+
+.skill-container {
+  background: blueviolet;
+  color: white;
+  padding: 7px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  /* height: fit-content; */
+}
+
+.skill-container button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.skill {
+  margin: 0;
+}
+
+.showSkills {
+  display: flex;
+  gap: 15px;
+}

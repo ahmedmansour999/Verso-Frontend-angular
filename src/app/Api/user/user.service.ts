@@ -20,6 +20,13 @@ export class UserService {
       })
     );
   }
+  updateUser(data : any):Observable<any>{
+    return this._http.post(`${this.api}/editUser` , data).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
   oneUser($id: number): Observable<any> {
     return this._http.get(`${this.api}/users/${$id}`).pipe(
       catchError((error: any) => {
@@ -56,7 +63,7 @@ export class UserService {
     return this.userData$.asObservable() ;
   }
 
-  
+
 
 
 }

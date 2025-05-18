@@ -1,0 +1,133 @@
+<section class="projects-edit">
+  <div class="head">
+    <h2>New Project</h2>
+    <button class="btn btn-warning" (click)="addProject()">
+      <i class="fas fa-plus"></i> Add
+    </button>
+  </div>
+
+  <form
+    [formGroup]="projectsForm"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
+    <div formArrayName="projects">
+      @for (project of projects.controls; track project; let i = $index) {
+      <div [formGroupName]="i" class="project-card">
+        <div class="project-header">
+          <h3>Project #{{ getProjectNum(i + 1) }}</h3>
+          <button
+            type="button"
+            class="btn btn-danger btn-remove"
+            (click)="removeProject(i)"
+            *ngIf="projects.length > 1"
+          >
+            <i class="fas fa-trash"></i> Remove
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'title-' + i">Project Title</label>
+          <div class="w-100">
+            <input
+              [id]="'title-' + i"
+              formControlName="title"
+              placeholder="Project name"
+              class="form-control"
+            />
+            @if (project.get('title')?.invalid && project.get('title')?.touched)
+            {
+            <div class="error-message">Project title is required</div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'short_description-' + i">Short Description</label>
+          <div class="w-100">
+            <input
+              [id]="'short_description-' + i"
+              formControlName="short_description"
+              placeholder="Brief description"
+              class="form-control"
+            />
+            @if (project.get('short_description')?.invalid &&
+            project.get('short_description')?.touched) {
+            <div class="error-message">
+              Short description is required (min 3 characters)
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'description-' + i">Full Description</label>
+          <div class="w-100">
+            <textarea
+              [id]="'description-' + i"
+              formControlName="description"
+              placeholder="Detailed project description"
+              rows="5"
+              class="form-control"
+            ></textarea>
+            @if (project.get('description')?.invalid &&
+            project.get('description')?.touched) {
+            <div class="error-message">
+              Description is required (min 3 characters)
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'link-' + i">Project Link</label>
+          <div class="w-100">
+            <input
+              [id]="'link-' + i"
+              formControlName="link"
+              placeholder="https://example.com"
+              class="form-control"
+            />
+            @if (project.get('link')?.invalid && project.get('link')?.touched) {
+            <div class="error-message">Valid URL is required</div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'image-' + i">Project Image</label>
+          <div class="image-upload w-100">
+            <input
+              type="file"
+              [id]="'image-' + i"
+              (change)="onFileChange($event, i)"
+              accept="image/*"
+              class="form-control"
+            />
+            @if (project.get('image')?.invalid && project.get('image')?.touched)
+            {
+            <div class="error-message">Image is required</div>
+            } @if (getImagePreview(i)) {
+            <div class="image-preview">
+              <img [src]="getImagePreview(i)" alt="Project preview" />
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-warning btn-save"
+        [disabled]="projectsForm.invalid || isSubmitting"
+      >
+        @if (isSubmitting) {
+        <i class="fas fa-spinner fa-spin"></i> Saving... } @else {
+        <i class="fas fa-save"></i> Save }
+      </button>
+    </div>
+  </form>
+</section>

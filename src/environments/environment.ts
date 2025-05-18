@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  api: 'http://localhost:8000/api',
-  baseUrl : 'http://localhost:8000/storage/'
+  api: 'https://uspace-production.up.railway.app/api',
+  baseUrl : 'https://uspace-production.up.railway.app/storage/'
 };

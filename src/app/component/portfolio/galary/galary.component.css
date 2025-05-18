@@ -1,75 +1,348 @@
+
+/* Gallery Section */
 section {
   margin-top: 50px;
   padding: 17px;
   background-color: var(--portfolio-sections-bg);
   color: var(--text-color);
   box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
+/* Item Background */
 .itembg {
   background-color: var(--portfolio-user-bg);
   box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+  border-radius: 4px;
 }
 
+/* Paragraph Styles */
 p {
   padding: 0;
   margin: 0;
+  line-height: 1.5;
 }
 
+/* Image Styles */
 img {
   width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-p.itembg {
-  margin: 0 0 15px 0;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  width: fit-content;
+img:hover {
+  transform: scale(1.02);
 }
 
-
-
+/* Header Styles */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0 15px 0;
+  margin-bottom: 10px;
 }
 
+/* Button Container */
 .btns {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+/* Button Styles */
 .btns button {
   display: flex;
-  padding: 8px;
+  padding: 8px 12px;
   border: none;
   background-color: var(--portfolio-user-bg);
   box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
   color: var(--text-color);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.btns button:hover:not(:disabled) {
+  opacity: 0.8;
+  transform: translateY(-1px);
 }
 
 .btns button:disabled {
-  opacity: .3;
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.btns button i {
+  font-size: 1rem;
 }
 
-.galary-item {
-  margin-bottom: 10px;
-  transition: transform .5s ease-in-out;
+/* Item Background Paragraph */
+p.itembg {
+  margin: 0 0 15px 0;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  font-weight: 500;
 }
+
+/* Gallery Container */
 
 .galary {
   overflow: hidden;
   flex-wrap: nowrap;
+  height: 450px;
+  position: relative;
+}
+
+/* Gallery Item */
+.galary-item {
+  margin-bottom: 10px;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 0 5px;
+}
+
+/* Loading State */
+.loading-state {
   height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color-secondary);
+}
+
+.loading-state i {
+/* Gallery Section */
+section {
+  margin-top: 50px;
+  padding: 17px;
+  background-color: var(--portfolio-sections-bg);
+  color: var(--text-color);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Item Background */
+.itembg {
+  background-color: var(--portfolio-user-bg);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+  border-radius: 4px;
+}
+
+/* Paragraph Styles */
+p {
+  padding: 0;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Image Styles */
+img {
+  width: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.02);
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 15px 0;
+  margin-bottom: 10px;
+}
+
+/* Button Container */
+.btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Button Styles */
+.btns button {
+  display: flex;
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--portfolio-user-bg);
+  box-shadow: 0px 0px 4px 1px var(--portfolio-sections-shadow);
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.btns button:hover:not(:disabled) {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.btns button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btns button i {
+  font-size: 1rem;
+}
+
+/* Item Background Paragraph */
+p.itembg {
+  margin: 0 0 15px 0;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  font-weight: 500;
+}
+
+/* Gallery Container */
+.galary {
+  overflow: hidden;
+  flex-wrap: nowrap;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Gallery Item */
+.galary-item {
+  margin-bottom: 10px;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 0 5px;
+}
+
+/* Loading State */
+.loading-state {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color-secondary);
+}
+
+.loading-state i {
+  font-size: 2rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Empty State */
+.empty-state {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color-secondary);
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .galary-item {
+    flex: 0 0 33.333%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btns {
+    align-self: flex-end;
+  }
+
+  .galary-item {
+    flex: 0 0 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  section {
+    padding: 12px;
+    margin-top: 30px;
+  }
+
+  .galary-item {
+    flex: 0 0 100%;
+    padding: 0 3px;
+  }
+}
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btns {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 576px) {
+  section {
+    padding: 12px;
+    margin-top: 30px;
+  }
+
+
+
+  .galary-item {
+    padding: 0 3px;
+  }
+}
+
+
+/* Add these to your existing CSS */
+.galary {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+}
+
+.galary-item {
+  flex: 0 0 auto;
+  min-width: 0; /* Prevent flex items from growing beyond container */
+}
+
+/* Adjust visible cards based on screen size */
+@media (min-width: 1400px) {
+  .galary-item {
+    width: calc(25% - 10px); /* 4 cards visible */
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .galary-item {
+    width: calc(33.333% - 10px); /* 3 cards visible */
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .galary-item {
+    width: calc(50% - 10px); /* 2 cards visible */
+  }
 }

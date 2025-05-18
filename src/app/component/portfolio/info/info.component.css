@@ -23,7 +23,10 @@ section {
 .user_image {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  overflow: hidden;
+  max-height: 380px;
+  justify-content: flex-start;
 }
 
 .user_image img {
@@ -118,7 +121,7 @@ section {
 }
 
 @media screen and (max-width : 767px) {
-  .info_card{
+  .info_card {
     flex-direction: column;
   }
 }

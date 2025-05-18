@@ -1,4 +1,11 @@
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { UserService } from '../../../Api/user/user.service';
 import { environment } from '../../../../environments/environment';
 
@@ -11,76 +18,114 @@ interface ICertification {
 
 @Component({
   selector: 'app-galary',
-  imports: [],
   templateUrl: './galary.component.html',
-  styleUrl: './galary.component.css',
+  styleUrls: ['./galary.component.css'],
 })
 export class GalaryComponent {
   @ViewChildren('cardWidth') cardElements!: QueryList<ElementRef>;
   currentIndex = 0;
   cardWidth: number = 0;
   translateX = 0;
-  rightDisable: boolean = false;
-  leftDisable: boolean = false;
-  baseUrl = environment.baseUrl ;
+  rightDisable: boolean = true;
+  leftDisable: boolean = true;
+  baseUrl = environment.baseUrl;
+  isLoading: boolean = true;
+  visibleCards: number = 4; // Default number of visible cards
 
-  certificationsData: ICertification[] = [
-    {
-      id: 1,
-      image: '',
-      title: '',
-      link: '',
-    }
-  ];
-  constructor(private _userService : UserService){
-    _userService.fetchUserData().subscribe((data)=>{
-      this.certificationsData = data.portfolio.certifications ;
-    })
+  certificationsData: ICertification[] = [];
+
+  constructor(
+    private _userService: UserService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.loadCertifications();
+    this.calculateVisibleCards();
   }
 
-  public get certifications() {
-    return this.certificationsData;
-  }
-
-  ngAfterViewInit(): void {
-    this.updateCardWidth();
-    this.updateButtonStates();
-    this.cardElements.changes.subscribe(() => {
-      this.updateCardWidth();
+  private loadCertifications(): void {
+    this.isLoading = true;
+    this._userService.currentUser().subscribe({
+      next: (data) => {
+        this.certificationsData = data.portfolio?.certifications || [];
+        this.updateButtonStates();
+      },
+      error: (err) => {
+        console.error('Failed to load certifications:', err);
+        this.certificationsData = [];
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.updateCardWidth();
+        this.calculateVisibleCards();
+        this.cdr.detectChanges();
+      },
     });
   }
 
+  trackById(index: number, item: ICertification): number {
+    return item.id || index;
+  }
+
   private updateCardWidth(): void {
-    if (this.cardElements.length > 0) {
+    if (this.cardElements?.length > 0) {
+      const element = this.cardElements.first.nativeElement;
+      const style = window.getComputedStyle(element);
       this.cardWidth =
-        this.cardElements.first.nativeElement.getBoundingClientRect().width;
+        element.offsetWidth +
+        parseFloat(style.marginLeft) +
+        parseFloat(style.marginRight);
+    }
+  }
+
+  private calculateVisibleCards(): void {
+    const containerWidth = this.getContainerWidth();
+    if (containerWidth > 0 && this.cardWidth > 0) {
+      this.visibleCards = Math.floor(containerWidth / this.cardWidth);
     }
   }
 
   right(): void {
     if (!this.rightDisable) {
-      this.currentIndex += 1;
-      this.translateX = -this.currentIndex * this.cardWidth;
-      this.updateButtonStates();
+      this.currentIndex = Math.min(
+        this.currentIndex + this.visibleCards,
+        this.certificationsData.length - this.visibleCards
+      );
+      this.updateSliderPosition();
     }
   }
 
   left(): void {
     if (!this.leftDisable) {
-      this.currentIndex -= 1;
-      this.translateX = -this.currentIndex * this.cardWidth;
-      this.updateButtonStates();
+      this.currentIndex = Math.max(0, this.currentIndex - this.visibleCards);
+      this.updateSliderPosition();
     }
+  }
+
+  private updateSliderPosition(): void {
+    this.translateX = -this.currentIndex * this.cardWidth;
+    this.updateButtonStates();
   }
 
   private updateButtonStates(): void {
     this.leftDisable = this.currentIndex <= 0;
-    this.rightDisable = this.currentIndex + 3 >= this.certificationsData.length;
+    this.rightDisable = this.currentIndex + this.visibleCards >= this.certificationsData.length;
   }
 
+  private getContainerWidth(): number {
+    if (this.cardElements?.length > 0) {
+      return this.cardElements.first.nativeElement.parentElement.offsetWidth;
+    }
+    return 0;
+  }
+
+  @HostListener('window:resize')
   onResize(): void {
     this.updateCardWidth();
-    this.translateX = -this.currentIndex * this.cardWidth;
-    this.updateButtonStates();
+    this.calculateVisibleCards();
+    this.updateSliderPosition();
   }
 }

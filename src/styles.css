@@ -5,6 +5,9 @@
 body {
   margin: 0;
 }
+img{
+  width: 100%;
+}
 
 .font-arabic {
   font-family: 'Kufam', sans-serif !important;

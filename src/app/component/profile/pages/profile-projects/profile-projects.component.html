@@ -1,0 +1,183 @@
+<section class="projects-edit">
+  <div class="head">
+    <h2 class="title">Edit Project</h2>
+    <button class="btn btn-success" routerLink="/profile/create-project">
+      <i class="fas fa-plus"></i> Add project
+    </button>
+  </div>
+
+  <form
+    [formGroup]="projectsForm"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
+    <div formArrayName="projects">
+      @for (project of projects.controls; track project; let i = $index) {
+      <div [formGroupName]="i" class="project-card">
+        <div class="project-header">
+          <h3>Project #{{ i + 1 }}</h3>
+          <button
+            type="button"
+            mat-raised-button
+            class="btn btn-danger btn-remove"
+            data-bs-toggle="modal"
+            [attr.data-bs-target]="'#deleteModal-' + i"
+            *ngIf="projects.length > 1"
+          >
+            <i class="fas fa-trash"></i> Remove
+          </button>
+
+          <div
+            class="modal fade"
+            [id]="'deleteModal-' + i"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Delete Permission
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">Delete {{project.get('title')?.value}}</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                    (click)="removeProject(i, project.get('id')?.value)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <input [id]="'id-' + i" formControlName="id" type="hidden" />
+        <input [id]="'userID-' + i" formControlName="user_id" type="hidden" />
+        <input
+          [id]="'portfolioID-' + i"
+          formControlName="portfolio_id"
+          type="hidden"
+        />
+        <div class="form-group">
+          <label [for]="'title-' + i">Project Title</label>
+          <div class="w-100">
+            <input
+              [id]="'title-' + i"
+              formControlName="title"
+              placeholder="Project name"
+              class="form-control"
+            />
+            @if (project.get('title')?.invalid && project.get('title')?.touched)
+            {
+            <div class="error-message">Project title is required</div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'short_description-' + i">Short Description</label>
+          <div class="w-100">
+            <input
+              [id]="'short_description-' + i"
+              formControlName="short_description"
+              placeholder="Brief description"
+              class="form-control"
+            />
+            @if (project.get('short_description')?.invalid &&
+            project.get('short_description')?.touched) {
+            <div class="error-message">
+              Short description is required (min 3 characters)
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'description-' + i">Full Description</label>
+          <div class="w-100">
+            <textarea
+              [id]="'description-' + i"
+              formControlName="description"
+              placeholder="Detailed project description"
+              rows="5"
+              class="form-control"
+            ></textarea>
+            @if (project.get('description')?.invalid &&
+            project.get('description')?.touched) {
+            <div class="error-message">
+              Description is required (min 3 characters)
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'link-' + i">Project Link</label>
+          <div class="w-100">
+            <input
+              [id]="'link-' + i"
+              formControlName="link"
+              placeholder="https://example.com"
+              class="form-control"
+            />
+            @if (project.get('link')?.invalid && project.get('link')?.touched) {
+            <div class="error-message">Valid URL is required</div>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'image-' + i">Project Image</label>
+          <div class="image-upload w-100">
+            <input
+              type="file"
+              [id]="'image-' + i"
+              (change)="onFileChange($event, i)"
+              accept="image/*"
+              class="form-control"
+            />
+            @if (project.get('image')?.invalid && project.get('image')?.touched)
+            {
+            <div class="error-message">Image is required</div>
+            } @if (getImagePreview(i)) {
+            <div class="image-preview">
+              <img [src]="getImagePreview(i)" alt="Project preview" />
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-warning btn-save"
+        [disabled]="projectsForm.invalid || isSubmitting"
+      >
+        @if (isSubmitting) {
+        <i class="fas fa-spinner fa-spin"></i> Saving... } @else {
+        <i class="fas fa-save"></i> Save }
+      </button>
+    </div>
+  </form>
+</section>

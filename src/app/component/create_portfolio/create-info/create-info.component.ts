@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { Portfolio } from '../../../interface/portfolio/portfolio';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { AuthService } from '../../../Api/Auth/auth.service';
+import { Router } from '@angular/router';
 
 const moment = _rollupMoment || _moment;
 
@@ -70,11 +71,22 @@ export class CreateInfoComponent {
     educations: new FormArray<FormGroup>([]),
     projects: new FormArray<FormGroup>([]),
     certifications: new FormArray<FormGroup>([]),
+    skills: new FormArray<FormGroup>([] , [this.minLengthArray(1)]),
+    language: new FormArray<FormGroup>([] , [this.minLengthArray(1)]),
   });
+  private minLengthArray(min: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control instanceof FormArray) {
+        return control.length >= min ? null : { minLengthArray: true };
+      }
+      return null;
+    };
+  }
 
   constructor(
     private _PortfolioService: PortfolioService,
-    private _authService: AuthService
+    private _authService: AuthService ,
+    private router : Router
   ) {
     this.addExperience();
     this.addEducation();
@@ -100,6 +112,12 @@ export class CreateInfoComponent {
   }
   get certifications(): FormArray {
     return this.portfolio_form.get('certifications') as FormArray;
+  }
+  get skills(): FormArray {
+    return this.portfolio_form.get('skills') as FormArray;
+  }
+  get language(): FormArray {
+    return this.portfolio_form.get('language') as FormArray;
   }
 
   createExperience(): FormGroup {
@@ -178,6 +196,28 @@ export class CreateInfoComponent {
       }),
     });
   }
+  newSkillForm = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
+  });
+  newLangForm = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
+  });
+  createSkill(title: string = ''): FormGroup {
+    return new FormGroup({
+      title: new FormControl(title, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+    });
+  }
+  createLang(title: string = ''): FormGroup {
+    return new FormGroup({
+      title: new FormControl(title, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+    });
+  }
 
   private endDateAfterStartValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
@@ -208,6 +248,20 @@ export class CreateInfoComponent {
   addCertification(): void {
     this.certifications.push(this.createCertification());
   }
+  addSkill() {
+    if (this.newSkillForm.valid) {
+      const title = this.newSkillForm.value.title || '';
+      this.skills.push(this.createSkill(title));
+      this.newSkillForm.reset();
+    }
+  }
+  addLang() {
+    if (this.newLangForm.valid) {
+      const title = this.newLangForm.value.title || '';
+      this.language.push(this.createLang(title));
+      this.newLangForm.reset();
+    }
+  }
 
   removeExperience(index: number): void {
     this.experiences.removeAt(index);
@@ -226,6 +280,12 @@ export class CreateInfoComponent {
 
   removeEducation(index: number): void {
     this.educations.removeAt(index);
+  }
+  removeSkills(index: number): void {
+    this.skills.removeAt(index);
+  }
+  removeLang(index: number): void {
+    this.language.removeAt(index);
   }
 
   removeCertification(i: number): void {
@@ -315,7 +375,10 @@ export class CreateInfoComponent {
     if (
       this.step === 1 &&
       this.portfolio_form.get('summary')?.valid &&
-      this.portfolio_form.get('graduate')?.valid
+      this.portfolio_form.get('graduate')?.valid &&
+      this.portfolio_form.get('language')?.valid &&
+      this.portfolio_form.get('skills')?.valid
+
     ) {
       this.step = 2;
     } else if (
@@ -346,8 +409,6 @@ export class CreateInfoComponent {
   async onSubmit(): Promise<void> {
     if (this.portfolio_form.valid) {
       this.uploading = true;
-      console.log('user_id', this.userId);
-
       try {
         const formValue = {
           summary: this.portfolio_form.value.summary || '',
@@ -389,25 +450,34 @@ export class CreateInfoComponent {
               link: cert.link || '',
               user_id: this.userId,
             })) || [],
+          skills:
+            this.portfolio_form.value.skills?.map((skill, i) => ({
+              title: skill.title || '',
+              user_id: this.userId,
+            })) || [],
+          language:
+            this.portfolio_form.value.language?.map((lang, i) => ({
+              title: lang.title || '',
+              user_id: this.userId,
+            })) || [],
         };
 
         this._PortfolioService.createPortfolio(formValue).subscribe(
-          (response: any) => {
-            console.log('Success:', response, formValue);
-          },
+
           (error: any) => {
             console.error('Error:', error, formValue);
           }
         );
 
-        console.log('All data submitted successfully', formValue);
       } catch (error) {
         console.error('Error submitting data:', error);
       } finally {
         this.uploading = false;
+        this.router.navigate(['/portfolio']);
       }
     } else {
       this.portfolio_form.markAllAsTouched();
+
     }
   }
 }

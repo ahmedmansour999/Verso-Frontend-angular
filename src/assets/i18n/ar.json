@@ -35,5 +35,6 @@
   "COMMENT_DESC": "اكتشف كيف يُحدث قالب واجهة المستخدم الخاص بنا تأثيرًا حقيقيًا.",
   "Get to know the faces behind the scenes and learn about the values that drive us.": "تعرف على الوجوه خلف الكواليس وتعلم عن القيم التي تحركنا.",
   "COMPANIES": "الشركات",
-  "SETTING": "الاعدادات"
+  "SETTING": "الاعدادات" ,
+  "LOGOUT": "تسجيل الخروج"
 }

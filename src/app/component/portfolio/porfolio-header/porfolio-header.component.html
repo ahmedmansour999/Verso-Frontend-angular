@@ -1,7 +1,7 @@
 <section class="sidebar" [class.hideList]="showList"  >
   <div class="top_section">
     <div class="site_icon_container">
-      <div class="site_icon">
+      <div class="site_icon" routerLink="/uspace/home" style="cursor: pointer;">
         <i class="fas fa-wind icon"></i>
         <p class="text-uppercase">uspace</p>
       </div>
@@ -11,7 +11,7 @@
     </div>
     <div class="user_header row">
       <div class="header_user_image col col-4">
-        <img [src]="userDetails.image" loading="lazy" alt="image" />
+        <img [src]="profileImage" loading="lazy" alt="image" />
       </div>
       <div class="header_info col col-8">
         <p class="text-uppercase">{{ userDetails.name }}</p>
@@ -39,7 +39,7 @@
     </li>
     <li routerLink="portfolio_galary" routerLinkActive="active">
       <i class="fas fa-images"></i>
-      <p>Gallery</p>
+      <p>Certification</p>
     </li>
     <li routerLink="portfolio_contact" routerLinkActive="active">
       <i class="fas fa-envelope"></i>

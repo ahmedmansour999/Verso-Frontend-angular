@@ -1,0 +1,202 @@
+<section class="home_section">
+  <div class="header">
+    <div class="head">
+      <h2 class="title">Edit Education</h2>
+      <button class="btn btn-success" routerLink="/profile/create-education">
+        <i class="fas fa-plus"></i> Add Education
+      </button>
+    </div>
+  </div>
+  <form
+    [formGroup]="formData"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
+    <div class="container step">
+      <div class="section" formArrayName="educations">
+        <div class="section_input">
+          @for (education of educations.controls; track education; let i =$index) {
+          <div [formGroupName]="i" class="experience-entry step mt-5">
+            <div class="education-header">
+              <h3>Education #{{ i + 1 }}</h3>
+              @if (educations.length > 1) {
+
+              <button
+                type="button"
+                class="btn btn-danger btn-remove"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#deleteModal-' + i"
+                *ngIf="educations.length > 1"
+              >
+                <i class="fas fa-trash"></i> Remove
+              </button>
+              }
+
+              <div
+                class="modal fade"
+                [id]="'deleteModal-' + i"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Delete Permission
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      Delete {{ education.get("education")?.value }}
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                        (click)="removeEducation(i, education.get('id')?.value)"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input [id]="'id-' + i" formControlName="id" type="hidden" />
+            <div class="form-group section ">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>Education</mat-label>
+                  <input
+                    matInput
+                    id="education-{{ i }}"
+                    formControlName="education"
+                    placeholder="Enter education name"
+                  />
+                  @if (education.get('education')?.errors &&
+                  education.get('education')?.touched) { @if
+                  (education.get('education')?.hasError('required')) {
+                  <mat-error>Education is required</mat-error>
+                  } @if (education.get('education')?.hasError('minlength')) {
+                  <mat-error>Minimum 3 characters required</mat-error>
+                  } }
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>Specialization</mat-label>
+                  <input
+                    matInput
+                    id="specialization-{{ i }}"
+                    formControlName="specialization"
+                    placeholder="Enter your specialization"
+                  />
+                  @if (education.get('specialization')?.errors &&
+                  education.get('specialization')?.touched) { @if
+                  (education.get('specialization')?.hasError('required')) {
+                  <mat-error>Specialization is required</mat-error>
+                  } @if (education.get('specialization')?.hasError('minlength'))
+                  {
+                  <mat-error>Minimum 3 characters required</mat-error>
+                  } }
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>Start Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="startPickerEducation"
+                    formControlName="startYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="startPickerEducation"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #startPickerEducation
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (education.get('startYear')?.errors &&
+                education.get('startYear')?.touched) { @if
+                (education.get('startYear')?.hasError('required')) {
+                <mat-error>Start year is required</mat-error>
+                } }
+              </div>
+            </div>
+
+            <div class="form-group section">
+              <div class="section_input">
+                <mat-form-field>
+                  <mat-label>End Year</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="endPickerEducation"
+                    formControlName="endYear"
+                    [max]="currentYear"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="endPickerEducation"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #endPickerEducation
+                    startView="multi-year"
+                    [startAt]="startDate"
+                    panelClass="example-month-picker"
+                  ></mat-datepicker>
+                </mat-form-field>
+                @if (education.get('endYear')?.errors &&
+                education.get('endYear')?.touched) { @if
+                (education.get('endYear')?.hasError('required')) {
+                <mat-error>End year is required</mat-error>
+                } @if (education.get('endYear')?.hasError('endBeforeStart')) {
+                <mat-error>End date must be after start date</mat-error>
+                } }
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-warning btn-save"
+        [disabled]="formData.invalid || isLoading"
+      >
+        @if (isLoading) {
+        <i class="fas fa-spinner fa-spin"></i> updating... } @else {
+        <i class="fas fa-save"></i> Save }
+      </button>
+    </div>
+  </form>
+</section>

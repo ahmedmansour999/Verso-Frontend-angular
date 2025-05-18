@@ -7,19 +7,20 @@ import {
 } from '@angular/common/http';
 import { finalize } from 'rxjs';
 
+let activeRequests = 0;
+
 export const loadingInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ) => {
   const loadingService = inject(LoadingService);
 
-  let activeRequests = 0;
 
   if (activeRequests === 0) {
     loadingService.show() ;
   }
 
-  activeRequests++;   
+  activeRequests++;
 
   return next(req).pipe(
     finalize(() => {

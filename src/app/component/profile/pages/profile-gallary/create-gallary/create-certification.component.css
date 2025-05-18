@@ -1,0 +1,98 @@
+section {
+  direction: ltr !important;
+  height: 100%;
+  padding: 20px 0;
+  position: relative;
+  height: 100%;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-content: center;
+  align-items: center;
+}
+h2{
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+}
+
+form {
+  width: 100%;
+  background: var(--section-bg);
+  overflow: hidden;
+  padding: 15px;
+  margin: 50px;
+  color: var(--text-color);
+  border-radius: 15px;
+}
+.modal-dialog{
+  color: black !important;
+}
+textarea {
+  padding: 10px;
+}
+
+.form-group {
+  display: flex;
+  margin: 20px 0;
+
+}
+
+label {
+  min-width: 20%;
+  display: none;
+}
+
+input {
+  color: var(--text-color) !important;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid blueviolet;
+  border-radius: 0;
+  outline: none;
+}
+
+textarea {
+  padding: 10px;
+  background: transparent;
+  border: 2px solid blueviolet;
+}
+
+.cert-header {
+  position: relative;
+}
+
+.btn-remove {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+}
+
+.form-actions {
+  display: flex;
+  gap: 6px;
+  float: inline-end;
+}
+
+.image-preview {
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100px;
+
+}
+
+.error-message {
+  color: red;
+  font-size: 15px;
+  padding: 5px 0;
+}

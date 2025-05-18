@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Token } from '../../Class/token.service';
-import { Portfolio } from '../../interface/portfolio/portfolio';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -12,25 +11,8 @@ export class PortfolioService {
   private apiUrl: string = environment.api;
   private token: string | null = null;
 
-  // This holds the form data you want to send (needs to be set before calling createInfo)
-  public formData: Portfolio = {
-    summary: '',
-    graduate: new Date(),
-    educations: [],
-    projects: [],
-    certifications: [],
-    experiences: [],
-  };
-
   constructor(private _http: HttpClient, private _token: Token) {
     this.token = this._token.getToken();
-  }
-
-  private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + this.token,
-    });
   }
 
   createPortfolio(formValue: any): Observable<any> {
@@ -52,6 +34,14 @@ export class PortfolioService {
       formData.append(`educations[${index}][end_date]`, edu.end_date);
       formData.append(`educations[${index}][description]`, edu.description);
       formData.append(`educations[${index}][user_id]`, edu.user_id);
+    });
+    formValue.skills.forEach((skill: any, index: number) => {
+      formData.append(`skills[${index}][title]`, skill.title);
+      formData.append(`skills[${index}][user_id]`, skill.user_id);
+    });
+    formValue.language.forEach((lang: any, index: number) => {
+      formData.append(`language[${index}][title]`, lang.title);
+      formData.append(`language[${index}][user_id]`, lang.user_id);
     });
 
     // Append experiences
@@ -94,36 +84,72 @@ export class PortfolioService {
         );
       }
       formData.append(`certifications[${index}][link]`, cert.link);
-      formData.append(
-        `certifications[${index}][user_id]`,
-        cert.user_id
-      );
+      formData.append(`certifications[${index}][user_id]`, cert.user_id);
     });
 
     return this._http.post(`${this.apiUrl}/portfolio/create`, formData);
   }
 
-  public createEducations(): Observable<any> {
-    return this._http.post(
-      `${this.apiUrl}/education/create`,
-      this.formData.educations);
+  updateProjects(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/project/update`, data);
   }
-  public createExperiences(): Observable<any> {
-    return this._http.post(
-      `${this.apiUrl}/experience/create`,
-      this.formData.experiences
-    );
+
+  addProject(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/project/create`, data);
   }
-  public createProjects(): Observable<any> {
-    return this._http.post(
-      `${this.apiUrl}/project/create`,
-      this.formData.projects
-    );
+  deleteProject(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/project/delete`, { id: id });
   }
-  public createCertifications(): Observable<any> {
-    return this._http.post(
-      `${this.apiUrl}/certification/create`,
-      this.formData.certifications
-    );
+
+  updateCertifications(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/certification/update`, data);
   }
+
+  addCertification(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/certification/create`, data);
+  }
+  deleteCertification(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/certification/delete`, { id: id });
+  }
+
+  updateEducations(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/education/update`, data);
+  }
+
+  addEducation(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/education/create`, data);
+  }
+  deleteEducation(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/education/delete`, { id: id });
+  }
+
+  updateExperience(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/experience/update`, data);
+  }
+
+  addExperience(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/experience/create`, data);
+  }
+
+  deleteExperience(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/experience/delete`, { id: id });
+  }
+
+
+  updateInfo(data: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/info/update`, data);
+  }
+
+
+  deleteLanguage(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/info/deleteLang`, { id: id });
+  }
+  deleteSkill(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/info/deleteSkill`, { id: id });
+  }
+
+  changeImage(data : any):Observable<any>{
+    return this._http.post(`${this.apiUrl}/info/changeImage`, data);
+  }
+
 }
