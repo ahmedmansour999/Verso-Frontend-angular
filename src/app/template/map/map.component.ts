@@ -4,8 +4,8 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  template: '<div id="map-container"></div>',
+  styles: ['#map-container { width: 100%; height: 100%; min-height: 220px; }']
 })
 export class MapComponent implements AfterViewInit, OnChanges {
   @Input() address: string = '';
@@ -22,16 +22,22 @@ export class MapComponent implements AfterViewInit, OnChanges {
       try {
         // Dynamically import Leaflet
         const leafletModule = await import('leaflet');
-        this.L = leafletModule.default || leafletModule; // Handle ES module interop
+        // Handle CommonJS module format
+        this.L = leafletModule.default || leafletModule;
         if (!this.L || !this.L.map) {
           console.error('Leaflet map function is not available');
+          return;
+        }
+        // Ensure the map container exists in the DOM
+        const mapContainer = document.getElementById('map-container');
+        if (!mapContainer) {
+          console.error('Map container not found in DOM');
           return;
         }
         this.initMap();
         if (this.address) {
           this.geocodeAddress(this.address);
         } else {
-          // Default to Beni Suef, Egypt
           this.geocodeAddress('Beni Suef, Egypt');
         }
       } catch (error) {
@@ -96,7 +102,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
           this.L.marker(coords).addTo(this.map).bindPopup(address).openPopup();
         } else {
           console.error(`No geocoding results found for "${address}"`);
-          const fallbackCoords: [number, number] = [29.0661, 31.0990]; // Beni Suef
+          const fallbackCoords: [number, number] = [30.0661, 31.0990]; // Beni Suef
           this.map.setView(fallbackCoords, 12);
           this.map.eachLayer((layer: any) => {
             if (layer instanceof this.L.Marker) {
