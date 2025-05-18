@@ -1,0 +1,1 @@
+import{T as n}from"./chunk-XZCONC3Z.js";var i=class e{extractErrorMessages(c){let r=[],a=t=>{typeof t=="string"?r.push(t):Array.isArray(t)?t.forEach(s=>a(s)):typeof t=="object"&&Object.values(t).forEach(s=>a(s))};return a(c),r}static \u0275fac=function(r){return new(r||e)};static \u0275prov=n({token:e,factory:e.\u0275fac,providedIn:"root"})};export{i as a};
