@@ -1,1 +1,0 @@
-import{a}from"./chunk-J4SIY5GJ.js";import"./chunk-ZTUCL5MJ.js";import"./chunk-SUKCW62Q.js";import"./chunk-BBAVFD2Y.js";import"./chunk-ONFB4OYB.js";import"./chunk-XZCONC3Z.js";import"./chunk-TSRGIXR5.js";export{a as GalaryComponent};
